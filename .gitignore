@@ -1,0 +1,76 @@
+# ---------- Secrets ----------
+# Vite inlines VITE_* vars into the bundle, so never commit a real .env.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# ---------- Dependencies ----------
+node_modules/
+.pnpm-store/
+.yarn/
+jspm_packages/
+web_modules/
+
+# ---------- Build output ----------
+dist/
+dist-ssr/
+build/
+out/
+.output/
+
+# ---------- Cache ----------
+.vite/
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.npm/
+.rpt2_cache/
+
+# ---------- Logs ----------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ---------- Testing / coverage ----------
+coverage/
+*.lcov
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
+/playwright/.cache/
+
+# ---------- Local tooling ----------
+.vercel/
+.netlify/
+
+# ---------- Editors / IDE ----------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.code-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*~
+
+# ---------- OS ----------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
