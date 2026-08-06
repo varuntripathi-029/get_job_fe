@@ -1,37 +1,75 @@
-# ---------- Secrets ----------
-# Vite inlines VITE_* vars into the bundle, so never commit a real .env.
+# =============================================================================
+# Secrets — Vite inlines every VITE_* var into the client bundle, so a
+# committed .env is a published .env. Keep this block first.
+# =============================================================================
 .env
 .env.*
 !.env.example
 *.pem
 *.key
+*.crt
+*.p12
 secrets/
+.netrc
+.npmrc
+.yarnrc
+.direnv/
+.envrc
 
-# ---------- Dependencies ----------
+# =============================================================================
+# Dependencies
+# =============================================================================
 node_modules/
 .pnpm-store/
-.yarn/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
 jspm_packages/
 web_modules/
+bower_components/
 
-# ---------- Build output ----------
+# =============================================================================
+# Build output
+# =============================================================================
 dist/
 dist-ssr/
 build/
 out/
 .output/
+.vercel/
+.netlify/
+storybook-static/
 
-# ---------- Cache ----------
+# Bundle analysis
+stats.html
+bundle-stats.json
+
+# =============================================================================
+# Caches
+# =============================================================================
 .vite/
+vite.config.*.timestamp-*
 .cache/
 .parcel-cache/
+.rollup.cache/
+.turbo/
 .eslintcache
 .stylelintcache
+.prettiercache
 *.tsbuildinfo
+tsconfig.tsbuildinfo
 .npm/
 .rpt2_cache/
+.rts2_cache_*/
 
-# ---------- Logs ----------
+# =============================================================================
+# Logs
+# =============================================================================
 logs/
 *.log
 npm-debug.log*
@@ -39,25 +77,41 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+report.[0-9]*.json
 
-# ---------- Testing / coverage ----------
+# =============================================================================
+# Testing & coverage
+# =============================================================================
 coverage/
 *.lcov
 .nyc_output/
 playwright-report/
+playwright/.cache/
 test-results/
 blob-report/
-/playwright/.cache/
+__snapshots__/*.snap.new
 
-# ---------- Local tooling ----------
-.vercel/
-.netlify/
+# =============================================================================
+# Local scratch
+# =============================================================================
+tmp/
+temp/
+*.bak
+*.tmp
+*.orig
+*.rej
+*.local
 
-# ---------- Editors / IDE ----------
+# =============================================================================
+# Editors, IDEs, and local tool state
+# =============================================================================
 .idea/
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.shared.json
 *.code-workspace
+*.sublime-project
+*.sublime-workspace
 *.suo
 *.ntvs*
 *.njsproj
@@ -65,12 +119,26 @@ blob-report/
 *.sw?
 *~
 
-# ---------- OS ----------
+# AI assistant local state (shared config stays tracked)
+.claude/settings.local.json
+.aider*
+.cursorignore
+
+# =============================================================================
+# OS cruft
+# =============================================================================
 .DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
+.fseventsd
+.AppleDouble
+.LSOverride
+Icon?
 Thumbs.db
+Thumbs.db:encryptable
 ehthumbs.db
 desktop.ini
+$RECYCLE.BIN/
+*.lnk
