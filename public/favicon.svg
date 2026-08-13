@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Signal Indigo mark: a radar sweep with a locked-on target.
+       Dark disc so it holds up against both light and dark browser chrome. -->
+  <rect width="32" height="32" rx="7" fill="#0a0a0f"/>
+  <circle cx="16" cy="16" r="9.5" fill="none" stroke="#6366f1" stroke-width="1.6" opacity="0.35"/>
+  <circle cx="16" cy="16" r="5.5" fill="none" stroke="#6366f1" stroke-width="1.6" opacity="0.6"/>
+  <path d="M16 16 L16 6.5 A9.5 9.5 0 0 1 24.2 11.2 Z" fill="#6366f1" opacity="0.55"/>
+  <circle cx="16" cy="16" r="2.4" fill="#818cf8"/>
+</svg>

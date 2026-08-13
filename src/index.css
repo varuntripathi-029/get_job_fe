@@ -1,0 +1,638 @@
+/* HireSignal — root stylesheet.
+
+   Layering note: Tailwind's `@theme inline` emits its own `--color-*`
+   declarations inside `@layer theme`. The design tokens below are deliberately
+   left UNLAYERED, and unlayered styles always win over layered ones regardless
+   of source order. That is what lets the theme variables keep the same names as
+   the Tailwind theme keys — `bg-void` resolves to `var(--color-void)`, which the
+   [data-theme] blocks are free to repoint at runtime. Do not wrap the token
+   blocks in @layer. */
+
+@import "tailwindcss";
+
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Design tokens — verbatim from designs/variables.css
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ───── Dark theme (default) ───── */
+:root,
+[data-theme="dark"] {
+  /* ── Brand ── */
+  --color-signal-indigo: #6366f1;
+  --color-indigo-light: #818cf8;
+  --color-indigo-dim: #4338ca;
+  --color-indigo-5: rgba(99, 102, 241, 0.05);
+  --color-indigo-10: rgba(99, 102, 241, 0.1);
+  --color-indigo-15: rgba(99, 102, 241, 0.15);
+
+  /* ── Surfaces ── */
+  --color-void: #0a0a0f;
+  --color-surface: #111118;
+  --color-surface-raised: #1a1a24;
+  --color-border: #1e1e2e;
+  --color-border-bright: #2a2a3d;
+
+  /* ── Text ── */
+  --color-text-primary: #f0f0f5;
+  --color-text-secondary: #9494a8;
+  --color-text-muted: #5a5a72;
+  --color-text-on-indigo: #ffffff;
+
+  /* ── Momentum palette ── */
+  --color-momentum-lime: #84cc16;
+  --color-momentum-teal: #2dd4bf;
+  --color-momentum-amber: #f59e0b;
+  --color-momentum-gray: #6b7280;
+  --color-momentum-none: #374151;
+
+  /* ── Signal palette (events / feedback) ── */
+  --color-signal-red: #ef4444;
+  --color-signal-blue: #3b82f6;
+  --color-signal-purple: #a855f7;
+  --color-signal-orange: #f97316;
+  --color-signal-green: #22c55e;
+
+  /* ── Momentum backgrounds (15% opacity) ── */
+  --color-momentum-lime-bg: rgba(132, 204, 22, 0.15);
+  --color-momentum-teal-bg: rgba(45, 212, 191, 0.15);
+  --color-momentum-amber-bg: rgba(245, 158, 11, 0.15);
+  --color-momentum-gray-bg: rgba(107, 114, 128, 0.15);
+  --color-momentum-none-bg: rgba(55, 65, 81, 0.15);
+
+  /* ── Signal backgrounds (15% opacity) ── */
+  --color-signal-red-bg: rgba(239, 68, 68, 0.15);
+  --color-signal-blue-bg: rgba(59, 130, 246, 0.15);
+  --color-signal-purple-bg: rgba(168, 85, 247, 0.15);
+  --color-signal-orange-bg: rgba(249, 115, 22, 0.15);
+  --color-signal-green-bg: rgba(34, 197, 94, 0.15);
+
+  /* ── Elevation ── */
+  --shadow-none: none;
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.5);
+  --backdrop-modal: rgba(0, 0, 0, 0.6);
+
+  /* Skeleton shimmer sweeps lighter than the surface on a dark canvas. */
+  --shimmer-highlight: rgba(255, 255, 255, 0.06);
+}
+
+/* ───── Light theme ───── */
+[data-theme="light"] {
+  /* ── Brand ── */
+  --color-signal-indigo: #4f46e5;
+  --color-indigo-light: #6366f1;
+  --color-indigo-dim: #3730a3;
+  --color-indigo-5: rgba(79, 70, 229, 0.05);
+  --color-indigo-10: rgba(79, 70, 229, 0.08);
+  --color-indigo-15: rgba(79, 70, 229, 0.12);
+
+  /* ── Surfaces ── */
+  --color-void: #f5f5f7;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f0f0f5;
+  --color-border: #e2e2ea;
+  --color-border-bright: #c8c8d8;
+
+  /* ── Text ── */
+  --color-text-primary: #111118;
+  --color-text-secondary: #5a5a72;
+  --color-text-muted: #9494a8;
+  --color-text-on-indigo: #ffffff;
+
+  /* ── Momentum — same hues, slightly deeper for contrast on white ── */
+  --color-momentum-lime: #65a30d;
+  --color-momentum-teal: #0d9488;
+  --color-momentum-amber: #d97706;
+  --color-momentum-gray: #6b7280;
+  --color-momentum-none: #9ca3af;
+
+  /* ── Signals ── */
+  --color-signal-red: #dc2626;
+  --color-signal-blue: #2563eb;
+  --color-signal-purple: #7c3aed;
+  --color-signal-orange: #ea580c;
+  --color-signal-green: #16a34a;
+
+  /* ── Momentum backgrounds ── */
+  --color-momentum-lime-bg: rgba(101, 163, 13, 0.1);
+  --color-momentum-teal-bg: rgba(13, 148, 136, 0.1);
+  --color-momentum-amber-bg: rgba(217, 119, 6, 0.1);
+  --color-momentum-gray-bg: rgba(107, 114, 128, 0.08);
+  --color-momentum-none-bg: rgba(156, 163, 175, 0.08);
+
+  /* ── Signal backgrounds ── */
+  --color-signal-red-bg: rgba(220, 38, 38, 0.08);
+  --color-signal-blue-bg: rgba(37, 99, 235, 0.08);
+  --color-signal-purple-bg: rgba(124, 58, 237, 0.08);
+  --color-signal-orange-bg: rgba(234, 88, 12, 0.08);
+  --color-signal-green-bg: rgba(22, 163, 74, 0.08);
+
+  /* ── Elevation ── */
+  --shadow-none: none;
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.12);
+  --backdrop-modal: rgba(0, 0, 0, 0.3);
+
+  /* On white, a white sweep is invisible — the highlight has to darken. */
+  --shimmer-highlight: rgba(0, 0, 0, 0.05);
+}
+
+/* ───── Typography ───── */
+:root {
+  --font-display: "Inter", "Inter Variable", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "JetBrains Mono Variable", ui-monospace, "Cascadia Code",
+    "Fira Code", monospace;
+
+  /* Display / heading sizes */
+  --text-display: 600 48px/1.1 var(--font-display);
+  --text-h1: 500 36px/1.2 var(--font-display);
+  --text-h2: 500 28px/1.3 var(--font-display);
+  --text-h3: 500 20px/1.3 var(--font-display);
+
+  /* Body sizes */
+  --text-body: 400 16px/1.5 var(--font-display);
+  --text-body-sm: 400 14px/1.5 var(--font-display);
+  --text-caption: 400 13px/1.4 var(--font-display);
+
+  /* Mono / UI chrome sizes */
+  --text-mono-lg: 500 14px/1.2 var(--font-mono);
+  --text-mono: 400 13px/1.2 var(--font-mono);
+  --text-mono-sm: 400 12px/1.2 var(--font-mono);
+  --text-mono-xs: 400 11px/1 var(--font-mono);
+
+  /* Special */
+  --text-score: 600 48px/1 var(--font-display);
+  /* The lg/md/sm score sizes from components.md. Only the 48px step existed as
+     a token; the other two are the same treatment at the documented sizes. */
+  --text-score-md: 600 36px/1 var(--font-display);
+  --text-score-sm: 600 28px/1 var(--font-display);
+}
+
+/* ───── Spacing ───── */
+:root {
+  --spacing-2: 2px;
+  --spacing-4: 4px;
+  --spacing-6: 6px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-128: 128px;
+}
+
+/* ───── Shapes ───── */
+:root {
+  --radius-card: 12px;
+  --radius-pill: 900px;
+  --radius-button: 900px;
+  --radius-input: 8px;
+  --radius-modal: 16px;
+  --radius-chart: 8px;
+  --radius-avatar: 900px;
+  --radius-tooltip: 8px;
+}
+
+/* ───── Layout ───── */
+:root {
+  --layout-max-width: 1280px;
+  --layout-section-gap: 64px;
+  --layout-card-padding: 24px;
+  --layout-card-padding-compact: 20px;
+  --layout-element-gap: 8px;
+  --layout-nav-height: 56px;
+  --layout-sidebar-width: 280px;
+}
+
+/* ───── Transitions ───── */
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-moderate: 250ms;
+  --duration-slow: 300ms;
+  --duration-score: 800ms;
+  --duration-sparkline: 600ms;
+  --duration-gauge: 1000ms;
+  --duration-shimmer: 1500ms;
+  --duration-pulse: 2000ms;
+}
+
+/* ───── Z-index scale ───── */
+:root {
+  --z-base: 0;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/* ───── Animations ───── */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* The mobile nav drawer enters from the left; slide-in-right is the toast's. */
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(132, 204, 22, 0);
+  }
+  50% {
+    box-shadow: 0 0 12px 2px rgba(132, 204, 22, 0.25);
+  }
+}
+
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: var(--line-length, 400);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes progress-bar {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+/* Utility classes for animations */
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--shimmer-highlight) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer var(--duration-shimmer) linear infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-scale-in {
+  animation: scale-in var(--duration-normal) var(--ease-out) both;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left var(--duration-moderate) var(--ease-out) both;
+}
+
+.animate-slide-up {
+  animation: slide-up var(--duration-slow) var(--ease-out) both;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow var(--duration-pulse) var(--ease-in-out) infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Tailwind theme mapping — every key points at the token above, so utilities
+   follow [data-theme] at runtime instead of baking in a literal colour.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+
+  /* Brand */
+  --color-signal-indigo: var(--color-signal-indigo);
+  --color-indigo-light: var(--color-indigo-light);
+  --color-indigo-dim: var(--color-indigo-dim);
+  --color-indigo-5: var(--color-indigo-5);
+  --color-indigo-10: var(--color-indigo-10);
+  --color-indigo-15: var(--color-indigo-15);
+
+  /* Surfaces */
+  --color-void: var(--color-void);
+  --color-surface: var(--color-surface);
+  --color-surface-raised: var(--color-surface-raised);
+  --color-border: var(--color-border);
+  --color-border-bright: var(--color-border-bright);
+
+  /* Text */
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-on-indigo: var(--color-text-on-indigo);
+
+  /* Momentum */
+  --color-momentum-lime: var(--color-momentum-lime);
+  --color-momentum-teal: var(--color-momentum-teal);
+  --color-momentum-amber: var(--color-momentum-amber);
+  --color-momentum-gray: var(--color-momentum-gray);
+  --color-momentum-none: var(--color-momentum-none);
+  --color-momentum-lime-bg: var(--color-momentum-lime-bg);
+  --color-momentum-teal-bg: var(--color-momentum-teal-bg);
+  --color-momentum-amber-bg: var(--color-momentum-amber-bg);
+  --color-momentum-gray-bg: var(--color-momentum-gray-bg);
+  --color-momentum-none-bg: var(--color-momentum-none-bg);
+
+  /* Signals */
+  --color-signal-red: var(--color-signal-red);
+  --color-signal-blue: var(--color-signal-blue);
+  --color-signal-purple: var(--color-signal-purple);
+  --color-signal-orange: var(--color-signal-orange);
+  --color-signal-green: var(--color-signal-green);
+  --color-signal-red-bg: var(--color-signal-red-bg);
+  --color-signal-blue-bg: var(--color-signal-blue-bg);
+  --color-signal-purple-bg: var(--color-signal-purple-bg);
+  --color-signal-orange-bg: var(--color-signal-orange-bg);
+  --color-signal-green-bg: var(--color-signal-green-bg);
+
+  --color-backdrop-modal: var(--backdrop-modal);
+
+  /* Radii */
+  --radius-card: var(--radius-card);
+  --radius-pill: var(--radius-pill);
+  --radius-button: var(--radius-button);
+  --radius-input: var(--radius-input);
+  --radius-modal: var(--radius-modal);
+  --radius-chart: var(--radius-chart);
+  --radius-avatar: var(--radius-avatar);
+  --radius-tooltip: var(--radius-tooltip);
+
+  /* Elevation */
+  --shadow-hover: var(--shadow-hover);
+  --shadow-modal: var(--shadow-modal);
+
+  /* Every numeric spacing utility resolves to that many pixels, which keeps the
+     token names (spacing-16 = 16px) and the utility names (p-16 = 16px) honest.
+     Without this, p-16 would be 64px and the two systems would disagree. */
+  --spacing: 1px;
+
+  --container-layout: var(--layout-max-width);
+
+  --ease-out: var(--ease-out);
+  --ease-in: var(--ease-in);
+  --ease-in-out: var(--ease-in-out);
+
+  --animate-shimmer: shimmer var(--duration-shimmer) linear infinite;
+  --animate-fade-in: fade-in var(--duration-slow) var(--ease-out) both;
+  --animate-scale-in: scale-in var(--duration-normal) var(--ease-out) both;
+  --animate-slide-in-right: slide-in-right var(--duration-slow) var(--ease-out) both;
+  --animate-slide-up: slide-up var(--duration-slow) var(--ease-out) both;
+  --animate-pulse-glow: pulse-glow var(--duration-pulse) var(--ease-in-out) infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Composite type utilities — the `font` shorthand carries family, weight, size
+   and line-height in one token, so a heading is one class rather than four.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@utility text-display {
+  font: var(--text-display);
+}
+@utility text-h1 {
+  font: var(--text-h1);
+}
+@utility text-h2 {
+  font: var(--text-h2);
+}
+@utility text-h3 {
+  font: var(--text-h3);
+}
+@utility text-body {
+  font: var(--text-body);
+}
+@utility text-body-sm {
+  font: var(--text-body-sm);
+}
+@utility text-caption {
+  font: var(--text-caption);
+}
+@utility text-mono-lg {
+  font: var(--text-mono-lg);
+}
+@utility text-mono {
+  font: var(--text-mono);
+}
+@utility text-mono-sm {
+  font: var(--text-mono-sm);
+}
+@utility text-mono-xs {
+  font: var(--text-mono-xs);
+}
+@utility text-score {
+  font: var(--text-score);
+}
+@utility text-score-md {
+  font: var(--text-score-md);
+}
+@utility text-score-sm {
+  font: var(--text-score-sm);
+}
+
+/* Uppercase tracked mono — the standard treatment for pills and buttons. */
+@utility text-mono-ui {
+  font: var(--text-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ───── Layout utilities keyed to the layout tokens ───── */
+
+@utility h-nav {
+  height: var(--layout-nav-height);
+}
+@utility pt-nav {
+  padding-top: var(--layout-nav-height);
+}
+@utility top-nav {
+  top: var(--layout-nav-height);
+}
+@utility w-sidebar {
+  width: var(--layout-sidebar-width);
+}
+@utility gap-section {
+  gap: var(--layout-section-gap);
+}
+
+/* Mobile filter sheets stop short of the top so the page stays visible behind. */
+@utility max-h-sheet {
+  max-height: 85vh;
+}
+
+/* Single-message pages (newsletter confirm, 404) centre in the viewport. */
+@utility min-h-panel {
+  min-height: 60vh;
+}
+
+/* ───── Z-index scale ───── */
+
+@utility z-raised {
+  z-index: var(--z-raised);
+}
+@utility z-dropdown {
+  z-index: var(--z-dropdown);
+}
+@utility z-sticky {
+  z-index: var(--z-sticky);
+}
+@utility z-overlay {
+  z-index: var(--z-overlay);
+}
+@utility z-modal {
+  z-index: var(--z-modal);
+}
+@utility z-toast {
+  z-index: var(--z-toast);
+}
+
+/* ───── Edge fade for horizontally scrolling filter/card rows ───── */
+
+@utility scroll-fade-x {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 24px,
+    black calc(100% - 24px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 24px,
+    black calc(100% - 24px),
+    transparent 100%
+  );
+}
+
+/* Hide the scrollbar on those rows without losing the ability to scroll. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Base
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-void);
+    color: var(--color-text-primary);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* One focus treatment everywhere: 2px indigo at 20%. */
+  :focus-visible {
+    outline: 2px solid rgb(99 102 241 / 0.2);
+    outline-offset: 2px;
+    border-radius: var(--radius-input);
+  }
+
+  ::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  /* Respect a reduced-motion preference — the count-ups, draws and pulses are
+     decoration on top of data that is already legible without them. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
