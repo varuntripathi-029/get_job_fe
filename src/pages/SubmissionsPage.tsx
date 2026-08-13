@@ -77,6 +77,8 @@ export function SubmissionsPage() {
           className="mt-32"
           page={page}
           totalPages={data.total_pages}
+          hasNext={data.has_next}
+          hasPrev={data.has_prev}
           onChange={(next) => patch({ page: next })}
         />
       )}

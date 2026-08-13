@@ -16,6 +16,11 @@ interface PaginationProps {
   className?: string;
   /** Binds ← / → to page changes. Off inside modals and nested lists. */
   keyboard?: boolean;
+  /** The API returns these alongside total_pages. Prefer them when present —
+   * they are computed server-side against the same query that produced the
+   * rows, so they stay right even if the count shifts between requests. */
+  hasNext?: boolean;
+  hasPrev?: boolean;
 }
 
 export function Pagination({
@@ -27,9 +32,11 @@ export function Pagination({
   perPageOptions = PER_PAGE_OPTIONS,
   className,
   keyboard = true,
+  hasNext,
+  hasPrev,
 }: PaginationProps) {
-  const canPrevious = page > 1;
-  const canNext = page < totalPages;
+  const canPrevious = hasPrev ?? page > 1;
+  const canNext = hasNext ?? page < totalPages;
 
   useEffect(() => {
     if (!keyboard) return;

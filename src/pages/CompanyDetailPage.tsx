@@ -297,6 +297,8 @@ function JobsTab({ slug }: { slug: string }) {
           className="mt-24"
           page={page}
           totalPages={data.total_pages}
+          hasNext={data.has_next}
+          hasPrev={data.has_prev}
           onChange={(next) => patch({ page: next })}
         />
       )}
@@ -362,6 +364,8 @@ function EventsTab({ slug }: { slug: string }) {
           className="mt-24"
           page={page}
           totalPages={data.total_pages}
+          hasNext={data.has_next}
+          hasPrev={data.has_prev}
           onChange={(next) => patch({ page: next })}
         />
       )}

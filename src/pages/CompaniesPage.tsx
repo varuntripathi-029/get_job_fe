@@ -33,6 +33,7 @@ export function CompaniesPage() {
   const navigate = useNavigate();
   const { get, getNumber, getBool, patch, clear, params } = useUrlState();
   const searchRef = useRef<HTMLInputElement>(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => setPageTitle("Companies"), []);
 
@@ -102,6 +103,10 @@ export function CompaniesPage() {
   const companies = data?.items ?? [];
   const hasFilters =
     Boolean(industry || stage || get("search")) || minScore > 0 || hasActiveJobs;
+  // Search is always on screen, so it is not counted on the mobile badge —
+  // the badge is about what is hidden behind the toggle.
+  const activeFilterCount =
+    (industry ? 1 : 0) + (stage ? 1 : 0) + (minScore > 0 ? 1 : 0) + (hasActiveJobs ? 1 : 0);
 
   const industryOptions = [
     { value: "", label: "All industries" },
@@ -169,18 +174,38 @@ export function CompaniesPage() {
         }
       />
 
-      {/* Filter bar */}
+      {/* Filter bar. Search stays visible at every width; the rest collapses
+          behind a toggle on mobile so the controls do not eat the first
+          screenful before a single company is visible. */}
       <div className="bg-surface border-border rounded-card mb-24 border p-16">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-center">
-          <SearchInput
-            ref={searchRef}
-            value={searchDraft}
-            onChange={setSearchDraft}
-            placeholder="Search companies…  (press /)"
-            className="lg:max-w-320 lg:flex-1"
-          />
+          <div className="flex items-center gap-12">
+            <SearchInput
+              ref={searchRef}
+              value={searchDraft}
+              onChange={setSearchDraft}
+              placeholder="Search companies…  (press /)"
+              className="min-w-0 flex-1 lg:max-w-320"
+            />
+            <PillButton
+              variant="outlined"
+              size="sm"
+              active={filtersOpen}
+              className="shrink-0 lg:hidden"
+              onClick={() => setFiltersOpen((open) => !open)}
+              aria-expanded={filtersOpen}
+            >
+              <SlidersHorizontal className="size-14" aria-hidden />
+              Filters
+              {activeFilterCount > 0 && (
+                <span className="bg-signal-indigo text-text-on-indigo rounded-pill ml-2 px-6 py-2 text-mono-xs">
+                  {activeFilterCount}
+                </span>
+              )}
+            </PillButton>
+          </div>
 
-          <div className="flex flex-wrap items-center gap-12">
+          <div className={cn("flex-wrap items-center gap-12", filtersOpen ? "flex" : "hidden lg:flex")}>
             <Select
               label="Industry"
               value={industry}
@@ -202,7 +227,12 @@ export function CompaniesPage() {
           </div>
         </div>
 
-        <div className="border-border mt-16 flex flex-wrap items-center gap-24 border-t pt-16">
+        <div
+          className={cn(
+            "border-border mt-16 flex-wrap items-center gap-24 border-t pt-16",
+            filtersOpen ? "flex" : "hidden lg:flex",
+          )}
+        >
           <label className="flex items-center gap-12">
             <span className="text-mono-sm text-text-muted uppercase">Min score</span>
             <input
@@ -306,6 +336,8 @@ export function CompaniesPage() {
           className="mt-32"
           page={page}
           totalPages={data.total_pages}
+          hasNext={data.has_next}
+          hasPrev={data.has_prev}
           onChange={(next) => patch({ page: next })}
           perPage={perPage}
           onPerPageChange={(next) => patch({ per_page: next, page: 1 })}

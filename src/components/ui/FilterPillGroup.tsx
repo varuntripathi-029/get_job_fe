@@ -32,7 +32,10 @@ export function FilterPillGroup<T extends string>({
   };
 
   return (
-    <div className={className}>
+    // min-w-0 is load-bearing: as a flex item this div would otherwise take
+    // min-width:auto and size itself to the full pill row, overflowing the
+    // page instead of letting the row below scroll.
+    <div className={cn("min-w-0", className)}>
       {label && (
         <span className="text-mono-sm text-text-muted mb-8 block uppercase">{label}</span>
       )}

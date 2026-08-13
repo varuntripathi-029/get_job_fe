@@ -7,6 +7,8 @@ import { label as labelOf, seniorityClass } from "@/lib/constants";
 import { cn, relativeTime } from "@/lib/utils";
 import type { Job, MomentumLevel } from "@/types";
 
+const MAX_SKILLS = 6;
+
 interface JobCardProps {
   job: Job;
   /** The list endpoint does not join the company score, so pages that know it
@@ -70,13 +72,32 @@ export function JobCard({ job, momentumLevel, index = 0, className, children }: 
         {!job.is_active && <Tag className="text-text-muted">Closed</Tag>}
       </div>
 
+      {/* Skills come off the parsed description and are frequently absent or
+          enormous — show a handful and count the rest rather than wrapping
+          twenty pills across the card. */}
+      {job.skills && job.skills.length > 0 && (
+        <div className="mt-12 flex flex-wrap items-center gap-6">
+          {job.skills.slice(0, MAX_SKILLS).map((skill) => (
+            <span
+              key={skill}
+              className="rounded-pill bg-indigo-10 text-mono-xs text-signal-indigo px-8 py-4"
+            >
+              {skill}
+            </span>
+          ))}
+          {job.skills.length > MAX_SKILLS && (
+            <span className="text-mono-xs text-text-muted">
+              +{job.skills.length - MAX_SKILLS} more
+            </span>
+          )}
+        </div>
+      )}
+
       <div className="text-mono-sm text-text-muted mt-12 flex flex-wrap items-center gap-x-12 gap-y-4">
-        {location && (
-          <span className="inline-flex items-center gap-4">
-            <MapPin className="size-12" aria-hidden />
-            {location}
-          </span>
-        )}
+        <span className="inline-flex items-center gap-4">
+          <MapPin className="size-12" aria-hidden />
+          {location ?? "Location not specified"}
+        </span>
         <span>First seen {relativeTime(job.first_seen_at)}</span>
       </div>
 
