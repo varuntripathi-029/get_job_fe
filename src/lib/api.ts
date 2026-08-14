@@ -15,6 +15,7 @@ import type {
   CompanyListItem,
   CompanyListParams,
   CompareResponse,
+  CrawlBudget,
   CrawlerHealthRow,
   DashboardStats,
   EventListParams,
@@ -122,18 +123,36 @@ api.interceptors.response.use(
   },
 );
 
-/** Pulls a readable message out of whatever the backend or network produced. */
+/** Pulls a readable message out of whatever the backend or network produced.
+ *
+ * Two shapes are possible. Everything raised from the AppError hierarchy comes
+ * back flat as `{error, message}` — that is the documented contract and covers
+ * essentially every deliberate failure. FastAPI's own request-validation and
+ * bare HTTPException responses still use `detail`, so both are read. Checking
+ * only `detail` is how a 401 with "Invalid or expired Google token." reached
+ * the user as axios's "Request failed with status code 401". */
 export function errorMessage(error: unknown, fallback = "Something went wrong"): string {
   if (axios.isAxiosError(error)) {
-    const detail = (error.response?.data as { detail?: unknown } | undefined)?.detail;
+    const data = error.response?.data as
+      | { message?: unknown; error?: unknown; detail?: unknown }
+      | undefined;
+
+    if (typeof data?.message === "string" && data.message) return data.message;
+
+    const detail = data?.detail;
     if (typeof detail === "string") return detail;
     if (Array.isArray(detail) && detail.length > 0) {
       const first = detail[0] as { msg?: string };
       if (first?.msg) return first.msg;
     }
+
     if (error.code === "ERR_NETWORK") return "Can't reach the API. Is the backend running?";
     if (error.response?.status === 404) return "Not found";
     if (error.response?.status === 403) return "You don't have access to that";
+
+    // Last resort before axios's opaque "Request failed with status code N":
+    // the machine code at least names the failure.
+    if (typeof data?.error === "string" && data.error) return data.error;
   }
   if (error instanceof Error && error.message) return error.message;
   return fallback;
@@ -164,6 +183,7 @@ export const dashboardApi = {
   activity: (params?: { limit?: number; event_type?: string }) =>
     get<ActivityResponse>("/dashboard/activity", params),
   industries: () => get<IndustriesResponse>("/dashboard/industries"),
+  crawlBudget: () => get<CrawlBudget>("/dashboard/crawl-budget"),
 };
 
 /* ── Companies ────────────────────────────────────────────────────────── */
