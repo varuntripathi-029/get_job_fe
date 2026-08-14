@@ -1,0 +1,5 @@
+# SPA fallback, in the format Netlify and Cloudflare Pages understand.
+# Render is configured via render.yaml routes; this keeps deep links working
+# if the site is ever moved to another host without remembering to port the
+# rewrite rule.
+/*  /index.html  200

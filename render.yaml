@@ -1,0 +1,47 @@
+# Render blueprint for the frontend.
+#
+# A static site: the build output is plain files, so there is no server to
+# sleep and no cold start — unlike the API, this is genuinely always-on.
+#
+# The rewrite is the load-bearing part. This is a single-page app using
+# createBrowserRouter, so /companies/razorpay exists only in the client's
+# router. Without the rewrite the host looks for a file at that path, finds
+# nothing, and returns 404 on every deep link and every hard refresh — the app
+# would work perfectly while navigating and break the moment anyone reloads or
+# opens a shared link.
+
+services:
+  - type: web
+    name: hiresignal-web
+    runtime: static
+    branch: main
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+
+    envVars:
+      # Baked in at build time, not read at runtime — Vite substitutes
+      # import.meta.env during the build, so changing this needs a rebuild,
+      # not just a restart.
+      - key: VITE_API_URL
+        sync: false # https://<your-api>.onrender.com, no trailing slash
+      - key: VITE_GOOGLE_CLIENT_ID
+        sync: false
+      - key: VITE_CONTACT_EMAIL
+        sync: false # optional; falls back to GitHub issues
+
+    routes:
+      # Everything the build did not emit as a real file goes to the SPA shell.
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+    headers:
+      # Hashed asset filenames change on every build, so they can be cached
+      # hard. index.html must not be, or a returning visitor keeps the old
+      # shell and requests asset hashes that no longer exist.
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /index.html
+        name: Cache-Control
+        value: no-cache
