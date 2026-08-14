@@ -18,12 +18,16 @@ export function Toggle({ checked, onChange, label, className }: ToggleProps) {
         onClick={() => onChange(!checked)}
         className={cn(
           "rounded-pill relative h-20 w-36 shrink-0 transition-colors duration-150 ease-out",
-          checked ? "bg-signal-indigo" : "bg-border-bright",
+          checked ? "bg-brand" : "bg-border-bright",
         )}
       >
+        {/* left-0 is load-bearing: without it the knob has no positional
+            anchor, so Chrome resolves its static position from the button's
+            UA text-align:center — the middle of the track — and the
+            translate stacks on top of that, throwing the knob off the end. */}
         <span
           className={cn(
-            "absolute top-2 size-16 rounded-avatar bg-white transition-transform duration-150 ease-out",
+            "absolute top-2 left-0 size-16 rounded-avatar bg-white transition-transform duration-150 ease-out",
             checked ? "translate-x-18" : "translate-x-2",
           )}
         />
