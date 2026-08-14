@@ -26,7 +26,7 @@ export function JobCard({ job, momentumLevel, index = 0, className, children }: 
     <article
       className={cn(
         "animate-fade-in bg-surface border-border rounded-card border p-16 transition-all duration-250 ease-out",
-        "hover:border-border-bright hover:shadow-hover",
+        "hover-lift hover:border-border-bright",
         className,
       )}
       style={{ animationDelay: `${index * 40}ms` }}
@@ -39,7 +39,7 @@ export function JobCard({ job, momentumLevel, index = 0, className, children }: 
             {job.company_slug && job.company_name ? (
               <Link
                 to={`/companies/${job.company_slug}`}
-                className="text-mono text-signal-indigo hover:text-indigo-light transition-colors duration-150"
+                className="text-mono text-brand hover:text-brand-light transition-colors duration-150"
               >
                 {job.company_name}
               </Link>
@@ -80,7 +80,7 @@ export function JobCard({ job, momentumLevel, index = 0, className, children }: 
           {job.skills.slice(0, MAX_SKILLS).map((skill) => (
             <span
               key={skill}
-              className="rounded-pill bg-indigo-10 text-mono-xs text-signal-indigo px-8 py-4"
+              className="rounded-pill bg-brand-10 text-mono-xs text-brand px-8 py-4"
             >
               {skill}
             </span>

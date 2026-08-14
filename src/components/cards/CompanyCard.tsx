@@ -40,7 +40,7 @@ export function CompanyCard({
       to={`/companies/${company.slug}`}
       className={cn(
         "animate-fade-in bg-surface border-border rounded-card group block border transition-all duration-250 ease-out",
-        "hover:border-border-bright hover:shadow-hover hover:-translate-y-2",
+        "hover-lift hover:border-border-bright",
         compact ? "w-260 shrink-0 p-16" : "p-20",
         className,
       )}
@@ -56,7 +56,7 @@ export function CompanyCard({
           {initialOf(company.name)}
         </span>
         <div className="min-w-0 flex-1">
-          <h3 className="text-body text-text-primary group-hover:text-signal-indigo truncate font-medium transition-colors duration-200">
+          <h3 className="text-body text-text-primary group-hover:text-brand truncate font-medium transition-colors duration-200">
             {company.name}
           </h3>
           <div className="text-caption text-text-secondary mt-4 flex flex-wrap items-center gap-x-8 gap-y-2">

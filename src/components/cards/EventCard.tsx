@@ -46,7 +46,7 @@ export function EventCard({ event, compact = false, index = 0, className }: Even
         {event.company_slug && event.company_name && (
           <Link
             to={`/companies/${event.company_slug}`}
-            className="text-mono text-signal-indigo hover:text-indigo-light transition-colors duration-150"
+            className="text-mono text-brand hover:text-brand-light transition-colors duration-150"
           >
             {event.company_name}
           </Link>
@@ -97,7 +97,7 @@ export function EventCard({ event, compact = false, index = 0, className }: Even
                         href={url}
                         target="_blank"
                         rel="noreferrer noopener"
-                        className="text-mono-sm text-signal-indigo hover:text-indigo-light inline-flex items-center gap-4 break-all transition-colors duration-150"
+                        className="text-mono-sm text-brand hover:text-brand-light inline-flex items-center gap-4 break-all transition-colors duration-150"
                       >
                         {prettyUrl(url, 46)}
                         <ExternalLink className="size-11 shrink-0" aria-hidden />

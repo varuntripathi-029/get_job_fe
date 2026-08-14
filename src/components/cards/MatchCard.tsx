@@ -27,11 +27,11 @@ export function MatchCard({ match, index = 0 }: MatchCardProps) {
             aria-label={`${percent}% match`}
           >
             <div
-              className="bg-signal-indigo h-full rounded-pill transition-[width] duration-500 ease-out"
+              className="bg-brand h-full rounded-pill transition-[width] duration-500 ease-out"
               style={{ width: `${percent}%` }}
             />
           </div>
-          <span className="text-mono text-signal-indigo tabular-nums">{percent}%</span>
+          <span className="text-mono text-brand tabular-nums">{percent}%</span>
         </div>
 
         {match.match_reasons.length > 0 && (
@@ -53,7 +53,7 @@ export function MatchCard({ match, index = 0 }: MatchCardProps) {
               <ul className="mt-8 space-y-6">
                 {match.match_reasons.map((reason) => (
                   <li key={reason} className="text-caption text-text-secondary flex gap-8">
-                    <span aria-hidden className="text-signal-indigo">
+                    <span aria-hidden className="text-brand">
                       ·
                     </span>
                     {reason}
