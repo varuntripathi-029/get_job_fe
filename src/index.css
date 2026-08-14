@@ -20,127 +20,159 @@
    Design tokens — verbatim from designs/variables.css
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ───── Dark theme (default) ───── */
+/* ───── Light theme (default) ─────
+   White canvas, green brand. Light is the default now, so the bare :root
+   block carries it and [data-theme="dark"] is the opt-in. Every token is
+   defined here; the dark block only repoints, which keeps a colour from
+   existing solely inside a theme-specific block. */
 :root,
-[data-theme="dark"] {
-  /* ── Brand ── */
-  --color-signal-indigo: #6366f1;
-  --color-indigo-light: #818cf8;
-  --color-indigo-dim: #4338ca;
-  --color-indigo-5: rgba(99, 102, 241, 0.05);
-  --color-indigo-10: rgba(99, 102, 241, 0.1);
-  --color-indigo-15: rgba(99, 102, 241, 0.15);
-
-  /* ── Surfaces ── */
-  --color-void: #0a0a0f;
-  --color-surface: #111118;
-  --color-surface-raised: #1a1a24;
-  --color-border: #1e1e2e;
-  --color-border-bright: #2a2a3d;
-
-  /* ── Text ── */
-  --color-text-primary: #f0f0f5;
-  --color-text-secondary: #9494a8;
-  --color-text-muted: #5a5a72;
-  --color-text-on-indigo: #ffffff;
-
-  /* ── Momentum palette ── */
-  --color-momentum-lime: #84cc16;
-  --color-momentum-teal: #2dd4bf;
-  --color-momentum-amber: #f59e0b;
-  --color-momentum-gray: #6b7280;
-  --color-momentum-none: #374151;
-
-  /* ── Signal palette (events / feedback) ── */
-  --color-signal-red: #ef4444;
-  --color-signal-blue: #3b82f6;
-  --color-signal-purple: #a855f7;
-  --color-signal-orange: #f97316;
-  --color-signal-green: #22c55e;
-
-  /* ── Momentum backgrounds (15% opacity) ── */
-  --color-momentum-lime-bg: rgba(132, 204, 22, 0.15);
-  --color-momentum-teal-bg: rgba(45, 212, 191, 0.15);
-  --color-momentum-amber-bg: rgba(245, 158, 11, 0.15);
-  --color-momentum-gray-bg: rgba(107, 114, 128, 0.15);
-  --color-momentum-none-bg: rgba(55, 65, 81, 0.15);
-
-  /* ── Signal backgrounds (15% opacity) ── */
-  --color-signal-red-bg: rgba(239, 68, 68, 0.15);
-  --color-signal-blue-bg: rgba(59, 130, 246, 0.15);
-  --color-signal-purple-bg: rgba(168, 85, 247, 0.15);
-  --color-signal-orange-bg: rgba(249, 115, 22, 0.15);
-  --color-signal-green-bg: rgba(34, 197, 94, 0.15);
-
-  /* ── Elevation ── */
-  --shadow-none: none;
-  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.3);
-  --shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.5);
-  --backdrop-modal: rgba(0, 0, 0, 0.6);
-
-  /* Skeleton shimmer sweeps lighter than the surface on a dark canvas. */
-  --shimmer-highlight: rgba(255, 255, 255, 0.06);
-}
-
-/* ───── Light theme ───── */
 [data-theme="light"] {
   /* ── Brand ── */
-  --color-signal-indigo: #4f46e5;
-  --color-indigo-light: #6366f1;
-  --color-indigo-dim: #3730a3;
-  --color-indigo-5: rgba(79, 70, 229, 0.05);
-  --color-indigo-10: rgba(79, 70, 229, 0.08);
-  --color-indigo-15: rgba(79, 70, 229, 0.12);
+  /* emerald-600 as the base: the lighter greens fail contrast on white for
+     text, so the light shades are reserved for fills and hovers. */
+  --color-brand: #059669;
+  --color-brand-light: #10b981;
+  --color-brand-dim: #047857;
+  --color-brand-5: rgba(5, 150, 105, 0.05);
+  --color-brand-10: rgba(5, 150, 105, 0.09);
+  --color-brand-15: rgba(5, 150, 105, 0.14);
 
   /* ── Surfaces ── */
-  --color-void: #f5f5f7;
+  /* The page sits a touch green rather than neutral grey, so white cards
+     read as raised against it without needing a heavier border. */
+  --color-void: #f4faf7;
   --color-surface: #ffffff;
-  --color-surface-raised: #f0f0f5;
-  --color-border: #e2e2ea;
-  --color-border-bright: #c8c8d8;
+  --color-surface-raised: #edf7f2;
+  --color-border: #dceee5;
+  --color-border-bright: #b5ddc9;
 
   /* ── Text ── */
-  --color-text-primary: #111118;
-  --color-text-secondary: #5a5a72;
-  --color-text-muted: #9494a8;
-  --color-text-on-indigo: #ffffff;
+  --color-text-primary: #0a1f17;
+  --color-text-secondary: #4a6b5c;
+  --color-text-muted: #85a293;
+  --color-text-on-brand: #ffffff;
 
-  /* ── Momentum — same hues, slightly deeper for contrast on white ── */
-  --color-momentum-lime: #65a30d;
+  /* ── Momentum palette — deepened for contrast on white ── */
+  --color-momentum-lime: #4d7c0f;
   --color-momentum-teal: #0d9488;
-  --color-momentum-amber: #d97706;
+  --color-momentum-amber: #b45309;
   --color-momentum-gray: #6b7280;
   --color-momentum-none: #9ca3af;
 
-  /* ── Signals ── */
+  /* ── Signal palette (events / feedback) ── */
   --color-signal-red: #dc2626;
   --color-signal-blue: #2563eb;
   --color-signal-purple: #7c3aed;
   --color-signal-orange: #ea580c;
-  --color-signal-green: #16a34a;
+  --color-signal-green: #15803d;
 
   /* ── Momentum backgrounds ── */
-  --color-momentum-lime-bg: rgba(101, 163, 13, 0.1);
+  --color-momentum-lime-bg: rgba(77, 124, 15, 0.1);
   --color-momentum-teal-bg: rgba(13, 148, 136, 0.1);
-  --color-momentum-amber-bg: rgba(217, 119, 6, 0.1);
+  --color-momentum-amber-bg: rgba(180, 83, 9, 0.1);
   --color-momentum-gray-bg: rgba(107, 114, 128, 0.08);
   --color-momentum-none-bg: rgba(156, 163, 175, 0.08);
 
   /* ── Signal backgrounds ── */
-  --color-signal-red-bg: rgba(220, 38, 38, 0.08);
-  --color-signal-blue-bg: rgba(37, 99, 235, 0.08);
-  --color-signal-purple-bg: rgba(124, 58, 237, 0.08);
-  --color-signal-orange-bg: rgba(234, 88, 12, 0.08);
-  --color-signal-green-bg: rgba(22, 163, 74, 0.08);
+  --color-signal-red-bg: rgba(220, 38, 38, 0.09);
+  --color-signal-blue-bg: rgba(37, 99, 235, 0.09);
+  --color-signal-purple-bg: rgba(124, 58, 237, 0.09);
+  --color-signal-orange-bg: rgba(234, 88, 12, 0.09);
+  --color-signal-green-bg: rgba(21, 128, 61, 0.09);
+
+  /* ── Elevation ──
+     Shadows are tinted green rather than neutral black. On a green-tinted
+     canvas a pure-black shadow greys the hue out and the card looks dirty. */
+  --shadow-none: none;
+  --shadow-hover: 0 10px 30px -6px rgba(5, 90, 60, 0.18),
+    0 4px 10px -4px rgba(5, 90, 60, 0.1);
+  --shadow-modal: 0 28px 60px -12px rgba(5, 90, 60, 0.28);
+  --backdrop-modal: rgba(9, 40, 28, 0.35);
+
+  /* ── Glass ──
+     Translucent surfaces that let the canvas through. The saturate boost
+     stops the blur washing the green out into grey. */
+  --glass-bg: rgba(255, 255, 255, 0.72);
+  --glass-bg-strong: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-blur: blur(16px) saturate(180%);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+  /* On white, a white sweep is invisible — the highlight has to darken. */
+  --shimmer-highlight: rgba(6, 78, 59, 0.06);
+}
+
+/* ───── Dark theme (opt-in) ─────
+   Only repoints tokens defined in :root above. Deep desaturated green rather
+   than neutral charcoal, so the brand hue survives the theme switch. */
+[data-theme="dark"] {
+  /* ── Brand ── */
+  /* Lighter than the light theme's brand: emerald-600 on a dark ground is
+     too low-contrast to read as an accent. */
+  --color-brand: #34d399;
+  --color-brand-light: #6ee7b7;
+  --color-brand-dim: #059669;
+  --color-brand-5: rgba(52, 211, 153, 0.06);
+  --color-brand-10: rgba(52, 211, 153, 0.12);
+  --color-brand-15: rgba(52, 211, 153, 0.18);
+
+  /* ── Surfaces ── */
+  --color-void: #05100b;
+  --color-surface: #0b1a13;
+  --color-surface-raised: #12291e;
+  --color-border: #1a3527;
+  --color-border-bright: #295141;
+
+  /* ── Text ── */
+  --color-text-primary: #e8f7ef;
+  --color-text-secondary: #94b8a6;
+  --color-text-muted: #5d7d6d;
+  --color-text-on-brand: #04231a;
+
+  /* ── Momentum palette ── */
+  --color-momentum-lime: #a3e635;
+  --color-momentum-teal: #2dd4bf;
+  --color-momentum-amber: #fbbf24;
+  --color-momentum-gray: #9ca3af;
+  --color-momentum-none: #4b5563;
+
+  /* ── Signal palette ── */
+  --color-signal-red: #f87171;
+  --color-signal-blue: #60a5fa;
+  --color-signal-purple: #c084fc;
+  --color-signal-orange: #fb923c;
+  --color-signal-green: #4ade80;
+
+  /* ── Momentum backgrounds ── */
+  --color-momentum-lime-bg: rgba(163, 230, 53, 0.15);
+  --color-momentum-teal-bg: rgba(45, 212, 191, 0.15);
+  --color-momentum-amber-bg: rgba(251, 191, 36, 0.15);
+  --color-momentum-gray-bg: rgba(156, 163, 175, 0.15);
+  --color-momentum-none-bg: rgba(75, 85, 99, 0.15);
+
+  /* ── Signal backgrounds ── */
+  --color-signal-red-bg: rgba(248, 113, 113, 0.15);
+  --color-signal-blue-bg: rgba(96, 165, 250, 0.15);
+  --color-signal-purple-bg: rgba(192, 132, 252, 0.15);
+  --color-signal-orange-bg: rgba(251, 146, 60, 0.15);
+  --color-signal-green-bg: rgba(74, 222, 128, 0.15);
 
   /* ── Elevation ── */
   --shadow-none: none;
-  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.12);
-  --backdrop-modal: rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 10px 30px -6px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(52, 211, 153, 0.08);
+  --shadow-modal: 0 28px 60px -12px rgba(0, 0, 0, 0.7);
+  --backdrop-modal: rgba(2, 10, 6, 0.68);
 
-  /* On white, a white sweep is invisible — the highlight has to darken. */
-  --shimmer-highlight: rgba(0, 0, 0, 0.05);
+  /* ── Glass ── */
+  --glass-bg: rgba(12, 30, 22, 0.66);
+  --glass-bg-strong: rgba(12, 30, 22, 0.86);
+  --glass-border: rgba(52, 211, 153, 0.16);
+  --glass-blur: blur(16px) saturate(160%);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* Skeleton shimmer sweeps lighter than the surface on a dark canvas. */
+  --shimmer-highlight: rgba(255, 255, 255, 0.07);
 }
 
 /* ───── Typography ───── */
@@ -384,12 +416,12 @@
   --font-mono: var(--font-mono);
 
   /* Brand */
-  --color-signal-indigo: var(--color-signal-indigo);
-  --color-indigo-light: var(--color-indigo-light);
-  --color-indigo-dim: var(--color-indigo-dim);
-  --color-indigo-5: var(--color-indigo-5);
-  --color-indigo-10: var(--color-indigo-10);
-  --color-indigo-15: var(--color-indigo-15);
+  --color-brand: var(--color-brand);
+  --color-brand-light: var(--color-brand-light);
+  --color-brand-dim: var(--color-brand-dim);
+  --color-brand-5: var(--color-brand-5);
+  --color-brand-10: var(--color-brand-10);
+  --color-brand-15: var(--color-brand-15);
 
   /* Surfaces */
   --color-void: var(--color-void);
@@ -402,7 +434,7 @@
   --color-text-primary: var(--color-text-primary);
   --color-text-secondary: var(--color-text-secondary);
   --color-text-muted: var(--color-text-muted);
-  --color-text-on-indigo: var(--color-text-on-indigo);
+  --color-text-on-brand: var(--color-text-on-brand);
 
   /* Momentum */
   --color-momentum-lime: var(--color-momentum-lime);
@@ -586,6 +618,46 @@
   );
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   Glass
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Translucent panel over whatever is scrolling behind it.
+   `backdrop-filter` needs a translucent background to have anything to blur —
+   an opaque one produces the same paint at triple the compositing cost. */
+@utility glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-highlight);
+}
+
+/* For surfaces that carry body text. The extra opacity buys back the contrast
+   that the blur costs — text over 72% glass fails AA on a busy background. */
+@utility glass-strong {
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-highlight);
+}
+
+/* Lift on hover: shadow plus a 2px rise. Transform and box-shadow are the two
+   properties that animate on the compositor, so this stays at 60fps where
+   animating a border or background colour would not. */
+@utility hover-lift {
+  transition:
+    transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--color-brand-15);
+  }
+}
+
 /* Hide the scrollbar on those rows without losing the ability to scroll. */
 @utility no-scrollbar {
   scrollbar-width: none;
@@ -612,9 +684,11 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* One focus treatment everywhere: 2px indigo at 20%. */
+  /* One focus treatment everywhere: 2px brand green.
+     Opaque rather than the old 20% tint — on a white canvas a 20% ring is
+     almost invisible, which is the one thing a focus ring must not be. */
   :focus-visible {
-    outline: 2px solid rgb(99 102 241 / 0.2);
+    outline: 2px solid var(--color-brand);
     outline-offset: 2px;
     border-radius: var(--radius-input);
   }
