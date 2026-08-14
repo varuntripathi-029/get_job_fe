@@ -91,7 +91,7 @@ export function Modal({
         aria-modal="true"
         aria-label={label}
         className={cn(
-          "animate-scale-in bg-surface border-border-bright rounded-modal shadow-modal relative w-full border",
+          "animate-scale-in glass-strong rounded-modal shadow-modal relative w-full",
           maxWidth,
           className,
         )}

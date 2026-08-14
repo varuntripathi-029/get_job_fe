@@ -76,13 +76,13 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
 
   return (
     <>
-      <header className="bg-surface border-border z-sticky fixed inset-x-0 top-0 border-b">
+      <header className="glass border-border z-sticky fixed inset-x-0 top-0 border-x-0 border-t-0 border-b">
         <div className="mx-auto flex h-nav max-w-layout items-center gap-16 px-16 sm:px-24">
           {/* Wordmark */}
           <Link to="/" className="flex shrink-0 items-center gap-8">
-            <Radar className="text-signal-indigo size-20" aria-hidden />
+            <Radar className="text-brand size-20" aria-hidden />
             <span className="text-h3 text-text-primary font-semibold">
-              Hire<span className="text-signal-indigo">Signal</span>
+              Hire<span className="text-brand">Signal</span>
             </span>
           </Link>
 
@@ -106,7 +106,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
             <span
               aria-hidden
               className={cn(
-                "bg-signal-indigo absolute bottom-0 block h-2 transition-all duration-200 ease-out",
+                "bg-brand absolute bottom-0 block h-2 transition-all duration-200 ease-out",
                 !indicator.visible && "opacity-0",
               )}
               style={{ left: indicator.left, width: indicator.width }}
@@ -141,7 +141,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                     className="rounded-avatar size-32 object-cover"
                   />
                 ) : (
-                  <span className="bg-signal-indigo text-text-on-indigo rounded-avatar text-mono-lg flex size-32 items-center justify-center">
+                  <span className="bg-brand text-text-on-brand rounded-avatar text-mono-lg flex size-32 items-center justify-center">
                     {initialOf(user.name || user.email)}
                   </span>
                 )
@@ -180,11 +180,11 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
           />
           <nav
             aria-label="Main menu"
-            className="bg-surface border-border animate-slide-in-left absolute inset-y-0 left-0 flex w-280 max-w-full flex-col overflow-y-auto border-r p-24"
+            className="glass-strong border-border animate-slide-in-left absolute inset-y-0 left-0 flex w-280 max-w-full flex-col overflow-y-auto border-r p-24"
           >
             <div className="flex items-center justify-between">
               <span className="text-h3 text-text-primary font-semibold">
-                Hire<span className="text-signal-indigo">Signal</span>
+                Hire<span className="text-brand">Signal</span>
               </span>
               <button
                 type="button"
@@ -205,7 +205,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                     cn(
                       "text-mono rounded-input px-12 py-12 transition-colors duration-150",
                       isActive
-                        ? "bg-indigo-10 text-signal-indigo"
+                        ? "bg-brand-10 text-brand"
                         : "text-text-secondary hover:bg-surface-raised hover:text-text-primary",
                     )
                   }
@@ -219,7 +219,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                   cn(
                     "text-mono rounded-input px-12 py-12 transition-colors duration-150",
                     isActive
-                      ? "bg-indigo-10 text-signal-indigo"
+                      ? "bg-brand-10 text-brand"
                       : "text-text-secondary hover:bg-surface-raised hover:text-text-primary",
                   )
                 }
