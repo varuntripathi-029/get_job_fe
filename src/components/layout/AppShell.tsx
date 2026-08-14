@@ -5,6 +5,7 @@ import { SignInModal } from "@/components/auth/SignInModal";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { SearchModal } from "@/components/ui/SearchModal";
 import { ToastContainer } from "@/components/ui/Toast";
+import { CrawlBudgetBanner } from "./CrawlBudgetBanner";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
 
@@ -31,6 +32,11 @@ export function AppShell() {
       <Navbar onOpenSearch={() => setSearchOpen(true)} />
 
       <main className="mx-auto w-full max-w-layout flex-1 px-16 pt-nav sm:px-24">
+        {/* Above the error boundary on purpose: if a page crashes, the reason
+            new data stopped arriving is still worth showing. */}
+        <div className="pt-24">
+          <CrawlBudgetBanner />
+        </div>
         {/* Keyed to the path so a crash on one route clears when you leave it. */}
         <ErrorBoundary key={location.pathname} label="page">
           <Outlet />

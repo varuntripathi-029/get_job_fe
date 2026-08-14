@@ -21,6 +21,24 @@ export interface IndustriesResponse {
   industries: IndustryBreakdown[];
 }
 
+export interface QuotaRow {
+  api: string;
+  used: number;
+  limit: number;
+  remaining: number;
+  exhausted: boolean;
+}
+
+/** `GET /dashboard/crawl-budget`. The free-tier lookup allowance for the day.
+ * `paused` is only true once every configured vendor is spent — while one has
+ * budget left the crawl is still finding things. */
+export interface CrawlBudget {
+  paused: boolean;
+  resets_at: string;
+  message: string | null;
+  vendors: QuotaRow[];
+}
+
 /** `GET /admin/metrics`. Sources are bucketed by status rather than counted
  * flat, because "pending" is a queue the admin has to work through. */
 export interface AdminMetrics {
