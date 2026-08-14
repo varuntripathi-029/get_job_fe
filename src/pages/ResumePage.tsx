@@ -145,7 +145,7 @@ function ParsedResume({
     <section className="bg-surface border-border rounded-card border p-24">
       <div className="flex flex-wrap items-start justify-between gap-16">
         <div className="flex items-center gap-12">
-          <FileText className="text-signal-indigo size-20 shrink-0" aria-hidden />
+          <FileText className="text-brand size-20 shrink-0" aria-hidden />
           <div>
             <p className="text-body text-text-primary">{resume.file_name ?? "resume"}</p>
             <p className="text-mono-sm text-text-muted mt-4">
@@ -185,7 +185,7 @@ function ParsedResume({
             {resume.parsed_skills.map((skill) => (
               <span
                 key={skill}
-                className="rounded-pill bg-indigo-10 text-mono-sm text-signal-indigo px-12 py-6"
+                className="rounded-pill bg-brand-10 text-mono-sm text-brand px-12 py-6"
               >
                 {skill}
               </span>

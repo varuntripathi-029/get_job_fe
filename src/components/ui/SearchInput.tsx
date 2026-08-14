@@ -37,7 +37,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(functi
         onChange={(event) => onChange(event.target.value)}
         className={cn(
           "bg-surface border-border rounded-input text-text-primary w-full border pr-36 pl-36 outline-none",
-          "focus:border-signal-indigo transition-colors duration-150",
+          "focus:border-brand transition-colors duration-150",
           // The browser's own clear button would sit next to ours.
           "[&::-webkit-search-cancel-button]:appearance-none",
           size === "lg" ? "text-body py-12" : "text-body-sm py-8",

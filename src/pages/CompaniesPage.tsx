@@ -198,7 +198,7 @@ export function CompaniesPage() {
               <SlidersHorizontal className="size-14" aria-hidden />
               Filters
               {activeFilterCount > 0 && (
-                <span className="bg-signal-indigo text-text-on-indigo rounded-pill ml-2 px-6 py-2 text-mono-xs">
+                <span className="bg-brand text-text-on-brand rounded-pill ml-2 px-6 py-2 text-mono-xs">
                   {activeFilterCount}
                 </span>
               )}
@@ -242,7 +242,7 @@ export function CompaniesPage() {
               step={5}
               value={minScore}
               onChange={(event) => patch({ min_score: event.target.value })}
-              className="accent-signal-indigo w-140"
+              className="accent-brand w-140"
               aria-label="Minimum momentum score"
             />
             <span className="text-mono text-text-primary w-24 tabular-nums">{minScore}</span>
@@ -366,7 +366,7 @@ function ViewButton({
       aria-pressed={active}
       className={cn(
         "rounded-pill p-8 transition-colors duration-150",
-        active ? "bg-indigo-10 text-signal-indigo" : "text-text-muted hover:text-text-primary",
+        active ? "bg-brand-10 text-brand" : "text-text-muted hover:text-text-primary",
       )}
     >
       <Icon className="size-16" aria-hidden />

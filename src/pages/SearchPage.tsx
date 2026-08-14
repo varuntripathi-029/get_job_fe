@@ -219,7 +219,7 @@ function Section({
           <button
             type="button"
             onClick={onShowAll}
-            className="text-mono-sm text-signal-indigo hover:text-indigo-light transition-colors duration-150"
+            className="text-mono-sm text-brand hover:text-brand-light transition-colors duration-150"
           >
             See all {total} →
           </button>
@@ -273,7 +273,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
     <>
       {parts.map((part, index) =>
         part.toLowerCase() === needle ? (
-          <mark key={index} className="bg-indigo-15 text-signal-indigo rounded-input px-2">
+          <mark key={index} className="bg-brand-15 text-brand rounded-input px-2">
             {part}
           </mark>
         ) : (

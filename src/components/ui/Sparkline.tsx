@@ -19,7 +19,7 @@ export function Sparkline({
   data,
   width = 120,
   height = 32,
-  color = "var(--color-signal-indigo)",
+  color = "var(--color-brand)",
   className,
 }: SparklineProps) {
   const gradientId = useId();

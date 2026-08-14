@@ -42,14 +42,14 @@ function HeroSection() {
 
   return (
     <section className="relative pt-64 pb-32 text-center">
-      {/* Radial indigo wash behind the headline — the one gradient the design
+      {/* Radial green wash behind the headline — the one gradient the design
           allows, and only as background light, never on a surface. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-400"
         style={{
           background:
-            "radial-gradient(60% 60% at 50% 30%, var(--color-indigo-10) 0%, transparent 100%)",
+            "radial-gradient(60% 60% at 50% 30%, var(--color-brand-10) 0%, transparent 100%)",
         }}
       />
 
@@ -178,7 +178,7 @@ function TrendingCard({ company, index }: { company: TrendingCompany; index: num
           {initialOf(company.name)}
         </span>
         <div className="min-w-0">
-          <p className="text-body-sm text-text-primary group-hover:text-signal-indigo truncate font-medium transition-colors duration-200">
+          <p className="text-body-sm text-text-primary group-hover:text-brand truncate font-medium transition-colors duration-200">
             {company.name}
           </p>
           {company.industry && (
@@ -328,7 +328,7 @@ function NewsletterCTA() {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="you@company.com"
-                className="bg-void border-border rounded-input text-body-sm text-text-primary focus:border-signal-indigo w-full border px-16 py-12 transition-colors duration-150 outline-none"
+                className="bg-void border-border rounded-input text-body-sm text-text-primary focus:border-brand w-full border px-16 py-12 transition-colors duration-150 outline-none"
               />
             </label>
             <PillButton type="submit" disabled={busy}>
@@ -349,7 +349,7 @@ function SectionHeading({ title, href }: { title: string; href: string }) {
       <h2 className="text-h2 text-text-primary">{title}</h2>
       <Link
         to={href}
-        className="text-mono text-signal-indigo hover:text-indigo-light shrink-0 transition-colors duration-150"
+        className="text-mono text-brand hover:text-brand-light shrink-0 transition-colors duration-150"
       >
         View all →
       </Link>

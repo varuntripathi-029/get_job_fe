@@ -114,7 +114,7 @@ function CompanyHeader({ company }: { company: CompanyDetail }) {
                 href={company.website}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="text-signal-indigo hover:text-indigo-light inline-flex items-center gap-4 transition-colors duration-150"
+                className="text-brand hover:text-brand-light inline-flex items-center gap-4 transition-colors duration-150"
               >
                 {prettyUrl(company.website, 32)}
                 <ExternalLink className="size-12" aria-hidden />
@@ -246,7 +246,7 @@ function OverviewTab({ company }: { company: CompanyDetail }) {
             {skills.map((skill) => (
               <span
                 key={skill}
-                className="rounded-pill bg-indigo-10 text-mono-sm text-signal-indigo px-12 py-6"
+                className="rounded-pill bg-brand-10 text-mono-sm text-brand px-12 py-6"
               >
                 {skill}
               </span>
@@ -396,7 +396,7 @@ function SourcesTab({ company }: { company: CompanyDetail }) {
             href={source.url}
             target="_blank"
             rel="noreferrer noopener"
-            className="text-mono text-text-primary hover:text-signal-indigo min-w-0 flex-1 truncate transition-colors duration-150"
+            className="text-mono text-text-primary hover:text-brand min-w-0 flex-1 truncate transition-colors duration-150"
           >
             {prettyUrl(source.url, 60)}
           </a>

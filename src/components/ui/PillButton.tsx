@@ -27,16 +27,16 @@ export function pillClasses({
     "transition-all duration-200 ease-out select-none",
     size === "sm" ? "px-16 py-6" : "px-20 py-8",
     variant === "filled" && [
-      "bg-signal-indigo text-text-on-indigo font-medium",
-      !disabled && "hover:bg-indigo-light hover:-translate-y-px active:translate-y-0 active:scale-97 active:bg-indigo-dim",
+      "bg-brand text-text-on-brand font-medium",
+      !disabled && "hover:bg-brand-light hover:-translate-y-px active:translate-y-0 active:scale-97 active:bg-brand-dim",
     ],
     variant === "outlined" && [
       "border",
       active
-        ? "border-signal-indigo bg-indigo-10 text-signal-indigo"
+        ? "border-brand bg-brand-10 text-brand"
         : "border-border-bright text-text-primary",
-      !disabled && !active && "hover:border-signal-indigo hover:bg-indigo-5 hover:text-signal-indigo",
-      !disabled && active && "hover:bg-indigo-15",
+      !disabled && !active && "hover:border-brand hover:bg-brand-5 hover:text-brand",
+      !disabled && active && "hover:bg-brand-15",
     ],
     disabled && "cursor-not-allowed opacity-40",
     className,

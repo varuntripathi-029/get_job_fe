@@ -197,7 +197,7 @@ export function SearchModal({ open, onClose }: SearchModalProps) {
           <button
             type="button"
             onClick={() => go(`/search?q=${encodeURIComponent(debounced.trim())}`)}
-            className="text-mono-sm text-signal-indigo hover:bg-surface-raised rounded-input mt-8 w-full px-12 py-10 text-left transition-colors duration-150"
+            className="text-mono-sm text-brand hover:bg-surface-raised rounded-input mt-8 w-full px-12 py-10 text-left transition-colors duration-150"
           >
             See all results for “{debounced}” →
           </button>

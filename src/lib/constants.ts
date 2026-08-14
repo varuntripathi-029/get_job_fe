@@ -148,10 +148,10 @@ export const EVENT_TYPE_META: Record<EventType, EventTypeMeta> = {
   engineering_expansion: {
     label: "ENG EXPANSION",
     icon: Code2,
-    cssVar: "var(--color-signal-indigo)",
-    text: "text-signal-indigo",
-    bg: "bg-indigo-15",
-    border: "border-signal-indigo",
+    cssVar: "var(--color-brand)",
+    text: "text-brand",
+    bg: "bg-brand-15",
+    border: "border-brand",
   },
   ai_division: {
     label: "AI DIVISION",
@@ -188,10 +188,10 @@ export const EVENT_TYPE_META: Record<EventType, EventTypeMeta> = {
   career_page_update: {
     label: "HIRING PAGE",
     icon: Briefcase,
-    cssVar: "var(--color-signal-indigo)",
-    text: "text-signal-indigo",
-    bg: "bg-indigo-15",
-    border: "border-signal-indigo",
+    cssVar: "var(--color-brand)",
+    text: "text-brand",
+    bg: "bg-brand-15",
+    border: "border-brand",
   },
   layoff: {
     label: "LAYOFF",
@@ -354,7 +354,7 @@ export const PER_PAGE_OPTIONS = [12, 24, 48, 96];
 
 /** The colour rotation for multi-series charts and comparison columns. */
 export const SERIES_COLORS = [
-  "var(--color-signal-indigo)",
+  "var(--color-brand)",
   "var(--color-signal-blue)",
   "var(--color-signal-purple)",
   "var(--color-signal-green)",

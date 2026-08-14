@@ -52,9 +52,9 @@ export function SourcesPage() {
       {stats && (
         <div className="bg-surface border-border rounded-card mb-24 border p-20">
           <p className="text-body text-text-primary">
-            <span className="text-signal-indigo font-medium">{formatCount(stats.total_sources)}</span>{" "}
+            <span className="text-brand font-medium">{formatCount(stats.total_sources)}</span>{" "}
             sources across{" "}
-            <span className="text-signal-indigo font-medium">
+            <span className="text-brand font-medium">
               {formatCount(stats.companies_with_sources)}
             </span>{" "}
             companies
@@ -142,7 +142,7 @@ function SourceGroup({
         {href ? (
           <Link
             to={href}
-            className="text-body text-text-primary hover:text-signal-indigo font-medium transition-colors duration-150"
+            className="text-body text-text-primary hover:text-brand font-medium transition-colors duration-150"
           >
             {title}
           </Link>
@@ -160,7 +160,7 @@ function SourceGroup({
               href={source.url}
               target="_blank"
               rel="noreferrer noopener"
-              className="text-mono text-text-primary hover:text-signal-indigo min-w-0 flex-1 truncate transition-colors duration-150"
+              className="text-mono text-text-primary hover:text-brand min-w-0 flex-1 truncate transition-colors duration-150"
             >
               {prettyUrl(source.url, 64)}
             </a>

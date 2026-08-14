@@ -201,7 +201,7 @@ function ComparisonTable({
                     />
                     <Link
                       to={`/companies/${company.slug}`}
-                      className="text-body text-text-primary hover:text-signal-indigo block truncate font-medium transition-colors duration-150"
+                      className="text-body text-text-primary hover:text-brand block truncate font-medium transition-colors duration-150"
                     >
                       {company.name}
                     </Link>

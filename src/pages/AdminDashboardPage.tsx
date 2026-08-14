@@ -141,7 +141,7 @@ function PendingQueue() {
                   href={source.url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="text-mono text-text-primary hover:text-signal-indigo block truncate transition-colors duration-150"
+                  className="text-mono text-text-primary hover:text-brand block truncate transition-colors duration-150"
                 >
                   {prettyUrl(source.url, 64)}
                 </a>
@@ -191,7 +191,7 @@ function PendingQueue() {
               onChange={(event) => setReason(event.target.value)}
               rows={3}
               placeholder="Shown to whoever submitted it."
-              className="bg-void border-border rounded-input text-body-sm text-text-primary focus:border-signal-indigo mt-8 w-full resize-y border px-16 py-12 transition-colors duration-150 outline-none"
+              className="bg-void border-border rounded-input text-body-sm text-text-primary focus:border-brand mt-8 w-full resize-y border px-16 py-12 transition-colors duration-150 outline-none"
             />
           </label>
           <div className="mt-24 flex justify-end gap-8">
@@ -260,7 +260,7 @@ function CrawlerHealth() {
           href={row.url}
           target="_blank"
           rel="noreferrer noopener"
-          className="text-mono text-text-primary hover:text-signal-indigo transition-colors duration-150"
+          className="text-mono text-text-primary hover:text-brand transition-colors duration-150"
           title={row.url}
         >
           {prettyUrl(row.url, 44)}

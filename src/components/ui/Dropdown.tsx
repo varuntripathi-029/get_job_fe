@@ -122,7 +122,7 @@ export function Select<T extends string>({
         onChange={(event) => onChange(event.target.value as T)}
         className={cn(
           "bg-surface border-border rounded-input text-mono text-text-primary w-full appearance-none border py-8 pr-32 pl-12",
-          "hover:border-border-bright focus:border-signal-indigo cursor-pointer transition-colors duration-150 outline-none",
+          "hover:border-border-bright focus:border-brand cursor-pointer transition-colors duration-150 outline-none",
         )}
       >
         {placeholder && <option value="">{placeholder}</option>}

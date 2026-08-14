@@ -11,7 +11,7 @@ export const AXIS_TICK = {
 } as const;
 
 export const GRID_STROKE = "var(--color-border)";
-export const INDIGO = "var(--color-signal-indigo)";
+export const INDIGO = "var(--color-brand)";
 
 export const AXIS_LINE = { stroke: "var(--color-border)" } as const;
 

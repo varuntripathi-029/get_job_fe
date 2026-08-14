@@ -35,7 +35,7 @@ export function IndustryBreakdownChart({ data, limit = 10, className }: Industry
           aria-label={`${labelOf(row.name)}, ${row.count} companies. Filter companies by this industry.`}
         >
           <div className="mb-6 flex items-baseline justify-between gap-12">
-            <span className="text-body-sm text-text-primary group-hover:text-signal-indigo truncate transition-colors duration-150">
+            <span className="text-body-sm text-text-primary group-hover:text-brand truncate transition-colors duration-150">
               {labelOf(row.name)}
             </span>
             <span className="text-mono text-text-secondary shrink-0 tabular-nums">
@@ -47,7 +47,7 @@ export function IndustryBreakdownChart({ data, limit = 10, className }: Industry
           </div>
           <div className="bg-surface-raised rounded-pill h-24 overflow-hidden">
             <div
-              className="bg-signal-indigo group-hover:bg-indigo-light rounded-pill h-full transition-all duration-500 ease-out"
+              className="bg-brand group-hover:bg-brand-light rounded-pill h-full transition-all duration-500 ease-out"
               style={{
                 width: `${(row.count / max) * 100}%`,
                 // Bars grow in sequence rather than all at once.

@@ -68,7 +68,7 @@ export function Tabs<T extends string>({ tabs, active, onChange, className }: Ta
       </div>
       <span
         aria-hidden
-        className="bg-signal-indigo absolute bottom-0 block h-2 transition-all duration-200 ease-out"
+        className="bg-brand absolute bottom-0 block h-2 transition-all duration-200 ease-out"
         style={{ left: indicator.left, width: indicator.width }}
       />
     </div>

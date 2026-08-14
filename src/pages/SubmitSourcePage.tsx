@@ -112,7 +112,7 @@ export function SubmitSourcePage() {
               className={cn(
                 "bg-void rounded-input text-body-sm text-text-primary w-full border px-16 py-12 pr-40 transition-colors duration-150 outline-none",
                 url.length === 0
-                  ? "border-border focus:border-signal-indigo"
+                  ? "border-border focus:border-brand"
                   : urlValid
                     ? "border-signal-green"
                     : "border-signal-red",
@@ -215,7 +215,7 @@ export function SubmitSourcePage() {
             onChange={(event) => setNotes(event.target.value)}
             rows={3}
             placeholder="Anything the reviewer should know."
-            className="bg-void border-border rounded-input text-body-sm text-text-primary focus:border-signal-indigo mt-8 w-full resize-y border px-16 py-12 transition-colors duration-150 outline-none"
+            className="bg-void border-border rounded-input text-body-sm text-text-primary focus:border-brand mt-8 w-full resize-y border px-16 py-12 transition-colors duration-150 outline-none"
           />
         </label>
 

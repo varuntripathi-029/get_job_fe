@@ -98,7 +98,7 @@ function SubmissionRow({ source }: { source: Source }) {
           href={source.url}
           target="_blank"
           rel="noreferrer noopener"
-          className="text-mono text-text-primary hover:text-signal-indigo min-w-0 flex-1 truncate transition-colors duration-150"
+          className="text-mono text-text-primary hover:text-brand min-w-0 flex-1 truncate transition-colors duration-150"
         >
           {prettyUrl(source.url, 60)}
         </a>

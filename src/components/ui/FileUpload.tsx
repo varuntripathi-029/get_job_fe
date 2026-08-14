@@ -67,7 +67,7 @@ export function FileUpload({
     return (
       <div className={cn("bg-surface border-border rounded-card border p-24", className)}>
         <div className="flex items-center gap-12">
-          <FileText className="text-signal-indigo size-20 shrink-0" aria-hidden />
+          <FileText className="text-brand size-20 shrink-0" aria-hidden />
           <span className="text-body-sm text-text-primary truncate">{fileName ?? "resume"}</span>
         </div>
         <div className="bg-surface-raised rounded-pill relative mt-16 h-6 overflow-hidden">
@@ -102,7 +102,7 @@ export function FileUpload({
         onDrop={onDrop}
         className={cn(
           "rounded-card flex flex-col items-center justify-center border-2 border-dashed px-24 py-48 text-center transition-colors duration-200",
-          dragging ? "border-signal-indigo bg-indigo-5" : "border-border",
+          dragging ? "border-brand bg-brand-5" : "border-border",
           status === "failed" && "border-signal-red",
         )}
       >
