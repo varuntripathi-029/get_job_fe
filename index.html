@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -8,16 +8,16 @@
       name="description"
       content="HireSignal tracks Indian startups for hiring momentum — funding, expansion and leadership signals pulled from public sources."
     />
-    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="theme-color" content="#f4faf7" />
     <title>HireSignal — hiring intelligence for Indian startups</title>
     <script>
-      // Applied before first paint so a light-theme user never sees a dark flash.
+      // Applied before first paint so a dark-theme user never sees a light flash.
       (function () {
         try {
           var stored = localStorage.getItem("hiresignal:theme");
-          document.documentElement.dataset.theme = stored === "light" ? "light" : "dark";
+          document.documentElement.dataset.theme = stored === "dark" ? "dark" : "light";
         } catch (e) {
-          document.documentElement.dataset.theme = "dark";
+          document.documentElement.dataset.theme = "light";
         }
       })();
     </script>

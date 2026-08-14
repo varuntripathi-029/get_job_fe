@@ -16,7 +16,8 @@ function initialTheme(): Theme {
   // index.html already stamped the attribute before first paint; read it back
   // rather than re-deriving, so the two can never disagree.
   const stamped = document.documentElement.dataset.theme;
-  return stamped === "light" ? "light" : "dark";
+  // Light is the default: only an explicit "dark" opts out.
+  return stamped === "dark" ? "dark" : "light";
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
