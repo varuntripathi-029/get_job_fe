@@ -106,33 +106,33 @@
 }
 
 /* ───── Dark theme (opt-in) ─────
-   Only repoints tokens defined in :root above. Deep desaturated green rather
-   than neutral charcoal, so the brand hue survives the theme switch. */
+   Spotify-style: neutral near-black greys with a single vivid green accent,
+   not a green-tinted charcoal — the gradient-green wash read as generic. Only
+   repoints tokens defined in :root above. Contrast held at AA or better. */
 [data-theme="dark"] {
   /* ── Brand ── */
-  /* Lighter than the light theme's brand: emerald-600 on a dark ground is
-     too low-contrast to read as an accent. */
-  --color-brand: #34d399;
-  --color-brand-light: #6ee7b7;
-  --color-brand-dim: #059669;
-  --color-brand-5: rgba(52, 211, 153, 0.06);
-  --color-brand-10: rgba(52, 211, 153, 0.12);
-  --color-brand-15: rgba(52, 211, 153, 0.18);
-  /* Brighter emerald reads better as a glow on the dark ground. */
-  --magic-glow: 52, 211, 153;
+  /* Spotify green. Bright enough to read as an accent on near-black, and it
+     carries black text rather than white (see --color-text-on-brand). */
+  --color-brand: #1ed760;
+  --color-brand-light: #1fdf64;
+  --color-brand-dim: #1db954;
+  --color-brand-5: rgba(30, 215, 96, 0.06);
+  --color-brand-10: rgba(30, 215, 96, 0.12);
+  --color-brand-15: rgba(30, 215, 96, 0.18);
+  --magic-glow: 30, 215, 96;
 
-  /* ── Surfaces ── */
-  --color-void: #05100b;
-  --color-surface: #0b1a13;
-  --color-surface-raised: #12291e;
-  --color-border: #1a3527;
-  --color-border-bright: #295141;
+  /* ── Surfaces ── Spotify's greys: base / card / elevated. */
+  --color-void: #121212;
+  --color-surface: #181818;
+  --color-surface-raised: #282828;
+  --color-border: #2a2a2a;
+  --color-border-bright: #3f3f3f;
 
-  /* ── Text ── */
-  --color-text-primary: #e8f7ef;
-  --color-text-secondary: #94b8a6;
-  --color-text-muted: #5d7d6d;
-  --color-text-on-brand: #04231a;
+  /* ── Text ── white on near-black; grey secondary at ~8.7:1, muted ~5:1. */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b3b3b3;
+  --color-text-muted: #8a8a8a;
+  --color-text-on-brand: #0a0a0a;
 
   /* ── Momentum palette ── */
   --color-momentum-lime: #a3e635;
@@ -146,7 +146,7 @@
   --color-signal-blue: #60a5fa;
   --color-signal-purple: #c084fc;
   --color-signal-orange: #fb923c;
-  --color-signal-green: #4ade80;
+  --color-signal-green: #1ed760;
 
   /* ── Momentum backgrounds ── */
   --color-momentum-lime-bg: rgba(163, 230, 53, 0.15);
@@ -160,20 +160,20 @@
   --color-signal-blue-bg: rgba(96, 165, 250, 0.15);
   --color-signal-purple-bg: rgba(192, 132, 252, 0.15);
   --color-signal-orange-bg: rgba(251, 146, 60, 0.15);
-  --color-signal-green-bg: rgba(74, 222, 128, 0.15);
+  --color-signal-green-bg: rgba(30, 215, 96, 0.15);
 
-  /* ── Elevation ── */
+  /* ── Elevation ── neutral black, no green ring. */
   --shadow-none: none;
-  --shadow-hover: 0 10px 30px -6px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(52, 211, 153, 0.08);
-  --shadow-modal: 0 28px 60px -12px rgba(0, 0, 0, 0.7);
-  --backdrop-modal: rgba(2, 10, 6, 0.68);
+  --shadow-hover: 0 10px 30px -6px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-modal: 0 28px 60px -12px rgba(0, 0, 0, 0.75);
+  --backdrop-modal: rgba(0, 0, 0, 0.7);
 
-  /* ── Glass ── */
-  --glass-bg: rgba(12, 30, 22, 0.66);
-  --glass-bg-strong: rgba(12, 30, 22, 0.86);
-  --glass-border: rgba(52, 211, 153, 0.16);
-  --glass-blur: blur(16px) saturate(160%);
+  /* ── Glass ── neutral dark with a faint white hairline. */
+  --glass-bg: rgba(24, 24, 24, 0.66);
+  --glass-bg-strong: rgba(24, 24, 24, 0.86);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(16px) saturate(140%);
   --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
   /* Skeleton shimmer sweeps lighter than the surface on a dark canvas. */
