@@ -1,5 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Briefcase, Building2, Inbox, Mail, RefreshCw, Rss, Users, Zap } from "lucide-react";
+import {
+  Ban,
+  Briefcase,
+  Building2,
+  Inbox,
+  Mail,
+  Play,
+  RefreshCw,
+  Rss,
+  Trash2,
+  Users,
+  Wand2,
+  Zap,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -217,19 +230,66 @@ type HealthSort = "consecutive_failures" | "last_crawl_at";
 
 function CrawlerHealth() {
   const toast = useToast();
+  const queryClient = useQueryClient();
   const [onlyFailing, setOnlyFailing] = useState(false);
   const [sortBy, setSortBy] = useState<HealthSort>("consecutive_failures");
+  const [deleting, setDeleting] = useState<CrawlerHealthRow | null>(null);
 
   const { data, isPending, isError } = useQuery({
     queryKey: ["admin", "crawler-health", onlyFailing],
     queryFn: () => adminApi.crawlerHealth({ limit: 200, only_failing: onlyFailing }),
   });
 
+  const refresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["admin", "crawler-health"] });
+    queryClient.invalidateQueries({ queryKey: ["admin", "metrics"] });
+  };
+
   const crawlNow = useMutation({
     mutationFn: (id: string) => adminApi.crawlNow(id),
     onSuccess: () => toast.success("Crawl queued"),
     onError: (error) => toast.error(errorMessage(error, "Could not queue crawl")),
   });
+
+  const redetect = useMutation({
+    mutationFn: (id: string) => adminApi.redetectTier(id),
+    onSuccess: (source) => {
+      toast.success(`Tier re-detected: ${labelOf(source.fetch_tier)}`);
+      refresh();
+    },
+    onError: (error) => toast.error(errorMessage(error, "Could not re-detect tier")),
+  });
+
+  const disable = useMutation({
+    mutationFn: (id: string) => adminApi.disableSource(id),
+    onSuccess: () => {
+      toast.success("Source disabled");
+      refresh();
+    },
+    onError: (error) => toast.error(errorMessage(error, "Could not disable")),
+  });
+
+  const enable = useMutation({
+    mutationFn: (id: string) => adminApi.enableSource(id),
+    onSuccess: () => {
+      toast.success("Source enabled and queued for crawling");
+      refresh();
+    },
+    onError: (error) => toast.error(errorMessage(error, "Could not enable")),
+  });
+
+  const remove = useMutation({
+    mutationFn: (id: string) => adminApi.deleteSource(id),
+    onSuccess: () => {
+      toast.success("Source deleted");
+      setDeleting(null);
+      refresh();
+    },
+    onError: (error) => toast.error(errorMessage(error, "Could not delete")),
+  });
+
+  const busy =
+    redetect.isPending || disable.isPending || enable.isPending || remove.isPending;
 
   const rows = useMemo(() => {
     const list = [...(data ?? [])];
@@ -321,17 +381,49 @@ function CrawlerHealth() {
     {
       key: "actions",
       header: "",
-      render: (row) => (
-        <PillButton
-          variant="outlined"
-          size="sm"
-          disabled={crawlNow.isPending}
-          onClick={() => crawlNow.mutate(row.source_id)}
-        >
-          <RefreshCw className="size-12" aria-hidden />
-          Crawl
-        </PillButton>
-      ),
+      render: (row) => {
+        const disabled = row.status === "disabled";
+        return (
+          <div className="flex items-center justify-end gap-6">
+            {disabled ? (
+              <IconAction
+                icon={Play}
+                label="Enable — resume crawling"
+                disabled={busy}
+                onClick={() => enable.mutate(row.source_id)}
+              />
+            ) : (
+              <>
+                <IconAction
+                  icon={RefreshCw}
+                  label="Crawl now"
+                  disabled={crawlNow.isPending}
+                  onClick={() => crawlNow.mutate(row.source_id)}
+                />
+                <IconAction
+                  icon={Wand2}
+                  label="Re-detect fetch tier"
+                  disabled={busy}
+                  onClick={() => redetect.mutate(row.source_id)}
+                />
+                <IconAction
+                  icon={Ban}
+                  label="Disable — stop crawling"
+                  disabled={busy}
+                  onClick={() => disable.mutate(row.source_id)}
+                />
+              </>
+            )}
+            <IconAction
+              icon={Trash2}
+              label="Delete permanently"
+              danger
+              disabled={busy}
+              onClick={() => setDeleting(row)}
+            />
+          </div>
+        );
+      },
     },
   ];
 
@@ -364,7 +456,66 @@ function CrawlerHealth() {
           emptyDescription={onlyFailing ? "Every source crawled cleanly last time round." : undefined}
         />
       )}
+
+      <Modal
+        open={deleting !== null}
+        onClose={() => setDeleting(null)}
+        label="Delete source"
+        maxWidth="max-w-480"
+      >
+        <div className="p-32">
+          <h2 className="text-h3 text-text-primary">Delete this source?</h2>
+          <p className="text-mono-sm text-text-muted mt-8 break-all">
+            {deleting && prettyUrl(deleting.url, 60)}
+          </p>
+          <p className="text-body-sm text-text-secondary mt-16">
+            This removes it permanently and frees its URL to be added again. Any
+            jobs already harvested stay, but stop being reconciled. To pause
+            crawling without losing history, disable it instead.
+          </p>
+          <div className="mt-24 flex justify-end gap-8">
+            <PillButton variant="outlined" onClick={() => setDeleting(null)}>
+              Cancel
+            </PillButton>
+            <PillButton
+              className="bg-signal-red hover:bg-signal-red text-text-on-brand"
+              disabled={remove.isPending}
+              onClick={() => deleting && remove.mutate(deleting.source_id)}
+            >
+              {remove.isPending ? "Deleting…" : "Delete"}
+            </PillButton>
+          </div>
+        </div>
+      </Modal>
     </section>
+  );
+}
+
+function IconAction({
+  icon: Icon,
+  label,
+  onClick,
+  disabled,
+  danger,
+}: {
+  icon: typeof RefreshCw;
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+  danger?: boolean;
+}) {
+  return (
+    <PillButton
+      variant="outlined"
+      size="sm"
+      className={cn("px-8", danger && "hover:border-signal-red hover:text-signal-red")}
+      disabled={disabled}
+      onClick={onClick}
+      title={label}
+      aria-label={label}
+    >
+      <Icon className="size-14" aria-hidden />
+    </PillButton>
   );
 }
 

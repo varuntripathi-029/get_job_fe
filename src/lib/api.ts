@@ -289,6 +289,15 @@ export const adminApi = {
     api.post<Source>(`/admin/sources/${id}/reject`, { reason }).then((r) => r.data),
   crawlNow: (id: string) =>
     api.post<{ message?: string }>(`/admin/sources/${id}/crawl-now`).then((r) => r.data),
+  redetectTier: (id: string) =>
+    api.post<Source>(`/admin/sources/${id}/redetect-tier`).then((r) => r.data),
+  disableSource: (id: string) =>
+    api.post<Source>(`/admin/sources/${id}/disable`).then((r) => r.data),
+  /** Re-approving a disabled source resumes crawling. */
+  enableSource: (id: string) =>
+    api.post<Source>(`/admin/sources/${id}/approve`).then((r) => r.data),
+  deleteSource: (id: string) =>
+    api.delete<void>(`/admin/sources/${id}`).then((r) => r.data),
   /** Returns a rendered HTML document, not JSON. */
   newsletterPreview: () =>
     api.get<string>("/admin/newsletter/preview", { responseType: "text" }).then((r) => r.data),
