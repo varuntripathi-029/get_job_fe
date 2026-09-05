@@ -3,6 +3,7 @@ import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 
 import { SignInModal } from "@/components/auth/SignInModal";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { GlobalSpotlight } from "@/components/ui/GlobalSpotlight";
 import { SearchModal } from "@/components/ui/SearchModal";
 import { ToastContainer } from "@/components/ui/Toast";
 import { CrawlBudgetBanner } from "./CrawlBudgetBanner";
@@ -29,6 +30,7 @@ export function AppShell() {
 
   return (
     <div className="bg-void text-text-primary flex min-h-screen flex-col">
+      <GlobalSpotlight />
       <Navbar onOpenSearch={() => setSearchOpen(true)} />
 
       <main className="mx-auto w-full max-w-layout flex-1 px-16 pt-nav sm:px-24">

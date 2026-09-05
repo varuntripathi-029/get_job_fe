@@ -1,8 +1,9 @@
 import { ChevronDown, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { EventTypeBadge } from "@/components/ui/EventTypeBadge";
+import { useMagicCard } from "@/hooks/useMagicCard";
 import { eventMeta } from "@/lib/constants";
 import { cn, formatDate, prettyUrl, relativeTime } from "@/lib/utils";
 import type { Evidence, HireEvent } from "@/types";
@@ -28,14 +29,17 @@ export function EventCard({ event, compact = false, index = 0, className }: Even
   const [expanded, setExpanded] = useState(false);
   const meta = eventMeta(event.event_type);
   const hasEvidence = event.evidence.length > 0;
+  const cardRef = useRef<HTMLElement>(null);
+  useMagicCard(cardRef, { particleCount: 0, clickEffect: true });
 
   // Occurrence date is the truth when known; observation is the fallback.
   const when = event.event_occurred_at ?? event.observed_at;
 
   return (
     <article
+      ref={cardRef}
       className={cn(
-        "animate-fade-in bg-surface p-16",
+        "magic-card animate-fade-in bg-surface p-16",
         compact ? "rounded-card" : cn("rounded-r-input border-l-3", meta.border),
         className,
       )}

@@ -1,5 +1,5 @@
 import { LayoutGrid, LogOut, Menu, Radar, Search, Shield, Upload, X } from "lucide-react";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import { Dropdown } from "@/components/ui/Dropdown";
@@ -7,6 +7,7 @@ import { PillButton } from "@/components/ui/PillButton";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { useAuth } from "@/context/AuthContext";
 import { cn, initialOf } from "@/lib/utils";
+import { NavPills } from "./NavPills";
 
 const NAV_LINKS = [
   { to: "/companies", label: "Companies" },
@@ -23,30 +24,6 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const listRef = useRef<HTMLDivElement>(null);
-  const [indicator, setIndicator] = useState({ left: 0, width: 0, visible: false });
-
-  // The underline is positioned from the live DOM rather than computed from
-  // label lengths, so it stays correct once the webfont swaps in.
-  const measure = useCallback(() => {
-    const list = listRef.current;
-    if (!list) return;
-    const active = list.querySelector<HTMLElement>("[data-active='true']");
-    if (!active) {
-      setIndicator((current) => ({ ...current, visible: false }));
-      return;
-    }
-    setIndicator({ left: active.offsetLeft, width: active.offsetWidth, visible: true });
-  }, []);
-
-  useLayoutEffect(measure, [measure, location.pathname]);
-
-  useEffect(() => {
-    window.addEventListener("resize", measure);
-    document.fonts?.ready.then(measure).catch(() => {});
-    return () => window.removeEventListener("resize", measure);
-  }, [measure]);
 
   // A route change should never leave the drawer hanging open behind the page.
   useEffect(() => setDrawerOpen(false), [location.pathname]);
@@ -87,30 +64,8 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
           </Link>
 
           {/* Primary nav — desktop */}
-          <nav ref={listRef} className="relative ml-24 hidden h-full items-center gap-24 md:flex">
-            {NAV_LINKS.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                data-active={location.pathname.startsWith(link.to)}
-                className={({ isActive }) =>
-                  cn(
-                    "text-mono flex h-full items-center transition-colors duration-200",
-                    isActive ? "text-text-primary" : "text-text-secondary hover:text-text-primary",
-                  )
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
-            <span
-              aria-hidden
-              className={cn(
-                "bg-brand absolute bottom-0 block h-2 transition-all duration-200 ease-out",
-                !indicator.visible && "opacity-0",
-              )}
-              style={{ left: indicator.left, width: indicator.width }}
-            />
+          <nav aria-label="Primary" className="ml-16 hidden items-center md:flex">
+            <NavPills items={NAV_LINKS} activePath={location.pathname} />
           </nav>
 
           <div className="flex-1" />

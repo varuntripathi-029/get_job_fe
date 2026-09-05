@@ -1,8 +1,10 @@
 import { ArrowUpRight, MapPin } from "lucide-react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { MomentumBadge } from "@/components/ui/MomentumScore";
 import { pillClasses } from "@/components/ui/PillButton";
+import { useMagicCard } from "@/hooks/useMagicCard";
 import { label as labelOf, seniorityClass } from "@/lib/constants";
 import { cn, relativeTime } from "@/lib/utils";
 import type { Job, MomentumLevel } from "@/types";
@@ -21,11 +23,14 @@ interface JobCardProps {
 
 export function JobCard({ job, momentumLevel, index = 0, className, children }: JobCardProps) {
   const location = job.location_normalized ?? job.location_raw;
+  const cardRef = useRef<HTMLElement>(null);
+  useMagicCard(cardRef, { particleCount: 6, clickEffect: true });
 
   return (
     <article
+      ref={cardRef}
       className={cn(
-        "animate-fade-in bg-surface border-border rounded-card border p-16 transition-all duration-250 ease-out",
+        "magic-card animate-fade-in bg-surface border-border rounded-card border p-16 transition-all duration-250 ease-out",
         "hover-lift hover:border-border-bright",
         className,
       )}

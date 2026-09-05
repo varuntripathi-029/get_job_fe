@@ -1,7 +1,8 @@
 import { ArrowDown, ArrowUp, type LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 
 import { useCountUp } from "@/hooks/useCountUp";
+import { useMagicCard } from "@/hooks/useMagicCard";
 import { cn } from "@/lib/utils";
 
 interface StatCardProps {
@@ -17,9 +18,14 @@ interface StatCardProps {
 export function StatCard({ label, value, trend, icon: Icon, hint, className }: StatCardProps) {
   const numeric = typeof value === "number";
   const counted = useCountUp(numeric ? value : 0, 800, numeric);
+  const cardRef = useRef<HTMLDivElement>(null);
+  useMagicCard(cardRef, { particleCount: 0, clickEffect: true });
 
   return (
-    <div className={cn("bg-surface border-border rounded-card border p-20", className)}>
+    <div
+      ref={cardRef}
+      className={cn("magic-card bg-surface border-border rounded-card border p-20", className)}
+    >
       <div className="flex items-start justify-between gap-8">
         <span className="text-mono-sm text-text-muted uppercase">{label}</span>
         {Icon && <Icon className="text-text-muted size-16 shrink-0" aria-hidden />}

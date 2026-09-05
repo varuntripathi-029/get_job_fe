@@ -1,7 +1,9 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { MomentumBadge, MomentumScore, ScoreDelta } from "@/components/ui/MomentumScore";
 import { Sparkline } from "@/components/ui/Sparkline";
+import { useMagicCard } from "@/hooks/useMagicCard";
 import { colorForName, label as labelOf, momentum } from "@/lib/constants";
 import { cn, formatCount, initialOf } from "@/lib/utils";
 import type { CompanyListItem, ScorePoint } from "@/types";
@@ -34,13 +36,16 @@ export function CompanyCard({
   const meta = momentum(company.momentum_label);
   const series = toSeries(history);
   const tint = colorForName(company.name);
+  const cardRef = useRef<HTMLAnchorElement>(null);
+  useMagicCard(cardRef, { particleCount: 8, enableTilt: true, enableMagnetism: true });
 
   return (
     <Link
+      ref={cardRef}
       to={`/companies/${company.slug}`}
       className={cn(
-        "animate-fade-in bg-surface border-border rounded-card group block border transition-all duration-250 ease-out",
-        "hover-lift hover:border-border-bright",
+        "magic-card animate-fade-in bg-surface border-border rounded-card group block border transition-colors duration-250 ease-out",
+        "hover:border-border-bright",
         compact ? "w-260 shrink-0 p-16" : "p-20",
         className,
       )}

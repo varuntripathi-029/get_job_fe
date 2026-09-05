@@ -36,6 +36,9 @@
   --color-brand-5: rgba(5, 150, 105, 0.05);
   --color-brand-10: rgba(5, 150, 105, 0.09);
   --color-brand-15: rgba(5, 150, 105, 0.14);
+  /* RGB triplet (no rgba wrapper) for the MagicBento glow, spotlight and
+     particles. Kept as a raw triplet so JS and CSS can both wrap it. */
+  --magic-glow: 5, 150, 105;
 
   /* ── Surfaces ── */
   /* The page sits a touch green rather than neutral grey, so white cards
@@ -115,6 +118,8 @@
   --color-brand-5: rgba(52, 211, 153, 0.06);
   --color-brand-10: rgba(52, 211, 153, 0.12);
   --color-brand-15: rgba(52, 211, 153, 0.18);
+  /* Brighter emerald reads better as a glow on the dark ground. */
+  --magic-glow: 52, 211, 153;
 
   /* ── Surfaces ── */
   --color-void: #05100b;
@@ -404,6 +409,103 @@
 
 .animate-pulse-glow {
   animation: pulse-glow var(--duration-pulse) var(--ease-in-out) infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   MagicBento — cursor spotlight, border glow, particles and click ripple.
+   The GlobalSpotlight component keeps --glow-x/y/intensity in sync per card;
+   the border-glow ring below reads them. All of it is themed off --magic-glow,
+   so it follows light/dark like everything else.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.magic-card {
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 260px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* The glowing ring that tracks the cursor. Masked to the border so only the
+   edge lights up, never the card's fill. */
+.magic-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(var(--magic-glow), calc(var(--glow-intensity) * 0.7)) 0%,
+    rgba(var(--magic-glow), calc(var(--glow-intensity) * 0.3)) 32%,
+    transparent 62%
+  );
+  border-radius: inherit;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity var(--duration-normal) var(--ease-out);
+  z-index: 1;
+}
+
+.global-spotlight {
+  position: fixed;
+  width: 640px;
+  height: 640px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    circle,
+    rgba(var(--magic-glow), 0.12) 0%,
+    rgba(var(--magic-glow), 0.06) 18%,
+    rgba(var(--magic-glow), 0.03) 34%,
+    transparent 60%
+  );
+}
+
+.magic-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(var(--magic-glow), 1);
+  box-shadow: 0 0 6px rgba(var(--magic-glow), 0.6);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.magic-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+  background: radial-gradient(
+    circle,
+    rgba(var(--magic-glow), 0.4) 0%,
+    rgba(var(--magic-glow), 0.2) 30%,
+    transparent 70%
+  );
+}
+
+/* Respect a user's reduced-motion setting: keep the static border glow, drop
+   the moving parts. The hook also checks this and skips the JS effects. */
+@media (prefers-reduced-motion: reduce) {
+  .global-spotlight,
+  .magic-particle,
+  .magic-ripple {
+    display: none !important;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
