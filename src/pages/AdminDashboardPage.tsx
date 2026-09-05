@@ -21,10 +21,12 @@ import { DataTable, type Column } from "@/components/ui/DataTable";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Modal } from "@/components/ui/Modal";
 import { PillButton, pillClasses } from "@/components/ui/PillButton";
+import { SearchInput } from "@/components/ui/SearchInput";
 import { Skeleton, StatCardSkeleton } from "@/components/ui/Skeleton";
 import { StatCard } from "@/components/ui/StatCard";
 import { Toggle } from "@/components/ui/Toggle";
 import { useToast } from "@/context/ToastContext";
+import { useDebounce } from "@/hooks/useDebounce";
 import { adminApi, errorMessage } from "@/lib/api";
 import { label as labelOf } from "@/lib/constants";
 import { cn, formatDate, prettyUrl, relativeTime, setPageTitle } from "@/lib/utils";
@@ -234,10 +236,17 @@ function CrawlerHealth() {
   const [onlyFailing, setOnlyFailing] = useState(false);
   const [sortBy, setSortBy] = useState<HealthSort>("consecutive_failures");
   const [deleting, setDeleting] = useState<CrawlerHealthRow | null>(null);
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
 
   const { data, isPending, isError } = useQuery({
-    queryKey: ["admin", "crawler-health", onlyFailing],
-    queryFn: () => adminApi.crawlerHealth({ limit: 200, only_failing: onlyFailing }),
+    queryKey: ["admin", "crawler-health", onlyFailing, debouncedSearch],
+    queryFn: () =>
+      adminApi.crawlerHealth({
+        limit: 200,
+        only_failing: onlyFailing,
+        search: debouncedSearch.trim() || undefined,
+      }),
   });
 
   const refresh = () => {
@@ -431,7 +440,14 @@ function CrawlerHealth() {
     <section>
       <div className="mb-16 flex flex-wrap items-center justify-between gap-16">
         <h2 className="text-h2 text-text-primary">Crawler health</h2>
-        <div className="flex items-center gap-16">
+        <div className="flex flex-wrap items-center gap-16">
+          <div className="w-260 max-w-full">
+            <SearchInput
+              value={search}
+              onChange={setSearch}
+              placeholder="Find by company or URL…"
+            />
+          </div>
           <Toggle checked={onlyFailing} onChange={setOnlyFailing} label="Only failing" />
         </div>
       </div>
@@ -452,8 +468,20 @@ function CrawlerHealth() {
           sortBy={sortBy}
           sortOrder="desc"
           onSort={(key) => setSortBy(key as HealthSort)}
-          emptyTitle={onlyFailing ? "Nothing is failing" : "No sources"}
-          emptyDescription={onlyFailing ? "Every source crawled cleanly last time round." : undefined}
+          emptyTitle={
+            debouncedSearch.trim()
+              ? "No matches"
+              : onlyFailing
+                ? "Nothing is failing"
+                : "No sources"
+          }
+          emptyDescription={
+            debouncedSearch.trim()
+              ? `Nothing matches "${debouncedSearch.trim()}".`
+              : onlyFailing
+                ? "Every source crawled cleanly last time round."
+                : undefined
+          }
         />
       )}
 

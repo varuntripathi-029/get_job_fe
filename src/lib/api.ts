@@ -279,7 +279,7 @@ export const newsletterApi = {
 
 export const adminApi = {
   metrics: () => get<AdminMetrics>("/admin/metrics"),
-  crawlerHealth: (params?: { limit?: number; only_failing?: boolean }) =>
+  crawlerHealth: (params?: { limit?: number; only_failing?: boolean; search?: string }) =>
     get<CrawlerHealthRow[]>("/admin/crawler/health", params),
   pendingSources: (params?: { page?: number; per_page?: number }) =>
     get<PaginatedResponse<Source>>("/admin/sources/pending", params),
