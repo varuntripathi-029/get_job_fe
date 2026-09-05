@@ -29,6 +29,7 @@ function detectSourceType(url: string): SourceType | "" {
     "breezy.hr",
     "freshteam.com",
     "pinpointhq.com",
+    "keka.com",
   ];
   if (atsHosts.some((host) => value.includes(host))) return "ats_api";
   if (value.includes("github.com")) return "github_org";
@@ -83,6 +84,11 @@ export function SubmitSourcePage() {
     onError: (error) => toast.error(errorMessage(error, "Submission failed")),
   });
 
+  // A supported ATS board identifies its own company on the first crawl, so the
+  // picker is optional there; a plain page or blog needs a company to attach to.
+  const isAtsBoard = sourceType === "ats_api";
+  const isBroadFeed = sourceType === "news_site" || sourceType === "rss_feed";
+
   const canSubmit = urlValid && Boolean(sourceType) && !submit.isPending;
 
   const onSubmit = (event: FormEvent) => {
@@ -128,9 +134,14 @@ export function SubmitSourcePage() {
               </span>
             )}
           </div>
-          {url.length > 0 && !urlValid && (
+          {url.length > 0 && !urlValid ? (
             <p className="text-mono-sm text-signal-red mt-8">
               Include the scheme — https://example.com/careers
+            </p>
+          ) : (
+            <p className="text-caption text-text-secondary mt-8">
+              Paste one link: a company careers page, an ATS board (Greenhouse,
+              Lever, Ashby, Keka…), an engineering blog, or an RSS feed.
             </p>
           )}
         </label>
@@ -153,13 +164,22 @@ export function SubmitSourcePage() {
               <span className="text-mono-sm text-text-muted">auto-detected</span>
             )}
           </div>
+          <p className="text-caption text-text-secondary mt-8">
+            Guessed from the URL — change it if the guess looks wrong.
+          </p>
         </div>
 
         {/* Company */}
         <div className="mt-24">
-          <span className="text-mono-sm text-text-muted uppercase">Company</span>
+          <span className="text-mono-sm text-text-muted uppercase">
+            Company{isAtsBoard || isBroadFeed ? " (optional)" : ""}
+          </span>
           <p className="text-caption text-text-secondary mt-4">
-            Leave blank for a general news or industry feed that isn't about one company.
+            {isAtsBoard
+              ? "Optional for an ATS board — we identify the company from the board itself. Set it only to attach this board to a company you already track."
+              : isBroadFeed
+                ? "Leave blank for a news or industry feed that covers many companies."
+                : "Pick the company this source is about, so its jobs and signals attach to the right one."}
           </p>
 
           {companyId ? (
