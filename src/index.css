@@ -113,6 +113,7 @@
   /* ── Brand ── */
   /* Spotify green. Bright enough to read as an accent on near-black, and it
      carries black text rather than white (see --color-text-on-brand). */
+  /* Bright green (#1ED760) for accents, classic green (#1DB954) as the dim. */
   --color-brand: #1ed760;
   --color-brand-light: #1fdf64;
   --color-brand-dim: #1db954;
@@ -121,18 +122,18 @@
   --color-brand-15: rgba(30, 215, 96, 0.18);
   --magic-glow: 30, 215, 96;
 
-  /* ── Surfaces ── Spotify's greys: base / card / elevated. */
-  --color-void: #121212;
-  --color-surface: #181818;
-  --color-surface-raised: #282828;
-  --color-border: #2a2a2a;
-  --color-border-bright: #3f3f3f;
+  /* ── Surfaces ── Spotify's deep black #191414, with elevated warm greys. */
+  --color-void: #191414;
+  --color-surface: #211c1c;
+  --color-surface-raised: #2a2424;
+  --color-border: #2f2929;
+  --color-border-bright: #453e3e;
 
-  /* ── Text ── white on near-black; grey secondary at ~8.7:1, muted ~5:1. */
+  /* ── Text ── white on #191414 (~17:1); grey secondary ~8.4:1, muted ~5:1. */
   --color-text-primary: #ffffff;
   --color-text-secondary: #b3b3b3;
   --color-text-muted: #8a8a8a;
-  --color-text-on-brand: #0a0a0a;
+  --color-text-on-brand: #191414;
 
   /* ── Momentum palette ── */
   --color-momentum-lime: #a3e635;
@@ -169,9 +170,9 @@
   --shadow-modal: 0 28px 60px -12px rgba(0, 0, 0, 0.75);
   --backdrop-modal: rgba(0, 0, 0, 0.7);
 
-  /* ── Glass ── neutral dark with a faint white hairline. */
-  --glass-bg: rgba(24, 24, 24, 0.66);
-  --glass-bg-strong: rgba(24, 24, 24, 0.86);
+  /* ── Glass ── warm near-black to match #191414, faint white hairline. */
+  --glass-bg: rgba(25, 20, 20, 0.68);
+  --glass-bg-strong: rgba(25, 20, 20, 0.88);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-blur: blur(16px) saturate(140%);
   --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.05);
@@ -412,10 +413,11 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MagicBento — cursor spotlight, border glow, particles and click ripple.
-   The GlobalSpotlight component keeps --glow-x/y/intensity in sync per card;
-   the border-glow ring below reads them. All of it is themed off --magic-glow,
-   so it follows light/dark like everything else.
+   MagicBento — per-card border glow, particles and click ripple.
+   useMagicCard sets --glow-x/y/intensity on the hovered card as the cursor
+   moves over it; the border-glow ring below reads them, so only the card under
+   the cursor lights up (no page-wide spotlight). Themed off --magic-glow, so it
+   follows light/dark like everything else.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .magic-card {
@@ -455,25 +457,6 @@
   z-index: 1;
 }
 
-.global-spotlight {
-  position: fixed;
-  width: 640px;
-  height: 640px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 40;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: screen;
-  background: radial-gradient(
-    circle,
-    rgba(var(--magic-glow), 0.12) 0%,
-    rgba(var(--magic-glow), 0.06) 18%,
-    rgba(var(--magic-glow), 0.03) 34%,
-    transparent 60%
-  );
-}
-
 .magic-particle {
   position: absolute;
   width: 4px;
@@ -501,7 +484,6 @@
 /* Respect a user's reduced-motion setting: keep the static border glow, drop
    the moving parts. The hook also checks this and skips the JS effects. */
 @media (prefers-reduced-motion: reduce) {
-  .global-spotlight,
   .magic-particle,
   .magic-ripple {
     display: none !important;

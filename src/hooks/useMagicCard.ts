@@ -107,11 +107,14 @@ export function useMagicCard(
 
     const onEnter = () => {
       hovered = true;
+      // Light this card's own border immediately; onMove tracks the position.
+      el.style.setProperty("--glow-intensity", "1");
       if (particleCount > 0) spawnParticles();
     };
 
     const onLeave = () => {
       hovered = false;
+      el.style.setProperty("--glow-intensity", "0");
       clearParticles();
       if (enableTilt || enableMagnetism) {
         gsap.to(el, {
@@ -126,12 +129,17 @@ export function useMagicCard(
     };
 
     const onMove = (event: MouseEvent) => {
-      if (!enableTilt && !enableMagnetism) return;
       const rect = el.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
       const cx = rect.width / 2;
       const cy = rect.height / 2;
+
+      // Border glow follows the cursor along this card's edge — on the card,
+      // not a torch roaming the page.
+      el.style.setProperty("--glow-x", `${(x / rect.width) * 100}%`);
+      el.style.setProperty("--glow-y", `${(y / rect.height) * 100}%`);
+      el.style.setProperty("--glow-intensity", "1");
 
       if (enableTilt) {
         gsap.to(el, {
