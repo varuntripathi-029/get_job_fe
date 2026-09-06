@@ -256,8 +256,16 @@ function CrawlerHealth() {
 
   const crawlNow = useMutation({
     mutationFn: (id: string) => adminApi.crawlNow(id),
-    onSuccess: () => toast.success("Crawl queued"),
-    onError: (error) => toast.error(errorMessage(error, "Could not queue crawl")),
+    onSuccess: (data) => {
+      const result = (data.result ?? {}) as { summary?: string; error?: string };
+      if (result.error) {
+        toast.error(`Crawl failed: ${result.error}`);
+      } else {
+        toast.success(result.summary ? `Crawled — ${result.summary}` : "Crawl complete");
+      }
+      refresh();
+    },
+    onError: (error) => toast.error(errorMessage(error, "Crawl failed")),
   });
 
   const redetect = useMutation({

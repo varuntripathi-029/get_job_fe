@@ -288,7 +288,11 @@ export const adminApi = {
   rejectSource: (id: string, reason: string) =>
     api.post<Source>(`/admin/sources/${id}/reject`, { reason }).then((r) => r.data),
   crawlNow: (id: string) =>
-    api.post<{ message?: string }>(`/admin/sources/${id}/crawl-now`).then((r) => r.data),
+    api
+      .post<{ crawled: boolean; url: string; result: Record<string, unknown> }>(
+        `/admin/sources/${id}/crawl-now`,
+      )
+      .then((r) => r.data),
   redetectTier: (id: string) =>
     api.post<Source>(`/admin/sources/${id}/redetect-tier`).then((r) => r.data),
   disableSource: (id: string) =>
