@@ -305,6 +305,19 @@ function CrawlerHealth() {
     onError: (error) => toast.error(errorMessage(error, "Could not delete")),
   });
 
+  const retierAll = useMutation({
+    mutationFn: () => adminApi.retierAll(),
+    onSuccess: (result) => {
+      toast.success(
+        result.upgraded > 0
+          ? `Promoted ${result.upgraded} source${result.upgraded === 1 ? "" : "s"} to the ATS tier`
+          : "Every source is already on the right tier",
+      );
+      refresh();
+    },
+    onError: (error) => toast.error(errorMessage(error, "Re-tier sweep failed")),
+  });
+
   const busy =
     redetect.isPending || disable.isPending || enable.isPending || remove.isPending;
 
@@ -457,6 +470,14 @@ function CrawlerHealth() {
             />
           </div>
           <Toggle checked={onlyFailing} onChange={setOnlyFailing} label="Only failing" />
+          <PillButton
+            variant="outlined"
+            disabled={retierAll.isPending}
+            onClick={() => retierAll.mutate()}
+            title="Sweep every source and promote any now recognisable as a parseable ATS to the ATS tier"
+          >
+            {retierAll.isPending ? "Re-tiering…" : "Re-tier all"}
+          </PillButton>
         </div>
       </div>
 

@@ -295,6 +295,11 @@ export const adminApi = {
       .then((r) => r.data),
   redetectTier: (id: string) =>
     api.post<Source>(`/admin/sources/${id}/redetect-tier`).then((r) => r.data),
+  /** Sweep all sources and promote any now recognisable as a parseable ATS. */
+  retierAll: () =>
+    api
+      .post<{ upgraded: number; urls: string[] }>("/admin/sources/retier")
+      .then((r) => r.data),
   disableSource: (id: string) =>
     api.post<Source>(`/admin/sources/${id}/disable`).then((r) => r.data),
   /** Re-approving a disabled source resumes crawling. */
