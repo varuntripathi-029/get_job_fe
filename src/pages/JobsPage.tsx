@@ -84,7 +84,6 @@ export function JobsPage() {
   });
 
   const jobs = data?.items ?? [];
-  const companiesInPage = new Set(jobs.map((job) => job.company_slug).filter(Boolean)).size;
   const hasFilters = Boolean(roleFamily || seniority || workMode || companySlug || get("search")) || !isActive;
 
   const filters = (
@@ -170,9 +169,7 @@ export function JobsPage() {
             <p className="text-mono text-text-secondary">
               {isPending && !data
                 ? "Loading…"
-                : `${formatCount(data?.total ?? 0)} ${data?.total === 1 ? "job" : "jobs"}${
-                    companiesInPage > 0 ? ` across ${companiesInPage} companies on this page` : ""
-                  }`}
+                : `${formatCount(data?.total ?? 0)} ${data?.total === 1 ? "job" : "jobs"}`}
             </p>
             <Select
               label="Sort by"
